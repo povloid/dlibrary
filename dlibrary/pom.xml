@@ -155,13 +155,7 @@
 
 
 
-		<!-- JDBC -->
-
-		<dependency>
-			<groupId>postgresql</groupId>
-			<artifactId>postgresql</artifactId>
-			<version>9.0-801.jdbc3</version>
-		</dependency>
+		
 
 
 		<!-- Tiles -->
@@ -227,15 +221,23 @@
 			<version>1</version>
 		</dependency>
 		<!-- Servlet -->
-		<dependency>
+		
+
+
+
+
+<!-- 	    <dependency>  -->
+<!--             <groupId>javax</groupId>  -->
+<!--             <artifactId>javaee-api</artifactId>  -->
+<!--             <version>6.0</version>  -->
+<!--         </dependency> -->
+        
+        <dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>servlet-api</artifactId>
 			<version>2.5</version>
 			<scope>provided</scope>
-		</dependency>
-
-
-
+		</dependency> 
 		<dependency>
 			<groupId>javax.servlet.jsp</groupId>
 			<artifactId>jsp-api</artifactId>
@@ -322,8 +324,25 @@
 			<artifactId>commons-io</artifactId>
 			<version>1.4</version>
 		</dependency>
-	</dependencies>
 
+		
+		
+		
+		<!-- JDBC -->
+
+		<dependency>
+			<groupId>postgresql</groupId>
+			<artifactId>postgresql</artifactId>
+			<version>9.0-801.jdbc3</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.firebirdsql.jdbc</groupId>
+			<artifactId>jaybird</artifactId>
+			<version>2.1.6</version>
+		</dependency>
+	</dependencies>
+	
 
 
 
@@ -367,16 +386,6 @@
 					<failOnMissingWebXml>false</failOnMissingWebXml>
 				</configuration>
 			</plugin>
-			<!-- <plugin> -->
-			<!-- <groupId>org.codehaus.mojo</groupId> -->
-			<!-- <artifactId>tomcat-maven-plugin</artifactId> -->
-			<!-- <version>1.0-beta-1</version> -->
-			<!-- <configuration> -->
-			<!-- <server>Tomcat7</server> -->
-			<!-- <url>http://localhost:8080/manager/text</url> -->
-			<!-- </configuration> -->
-			<!-- </plugin> -->
-
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>tomcat-maven-plugin</artifactId>

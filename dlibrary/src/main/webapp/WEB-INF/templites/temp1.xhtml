@@ -1,0 +1,194 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.prime.com.tr/ui">
+
+<f:view contentType="text/html">
+
+	<h:head>
+		<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+		<link type="text/css" rel="stylesheet"
+			href="#{request.contextPath}/css/jsfdefault_1.css" />
+<!-- 		<link type="text/css" rel="stylesheet" href="#{request.contextPath}/css/default.css" /> -->
+
+		<style type="text/css">
+.home {
+	background-image: url(#{request.contextPath}/images/icons/home_16.png)
+		!important;
+}
+
+.addbk {
+	background-image: url(#{request.contextPath}/images/icons/addbk_16.png)
+		!important;
+}
+
+.add {
+	background-image: url(#{request.contextPath}/images/icons/add_16.png)
+		!important;
+}
+
+.edit {
+	background-image: url(#{request.contextPath}/images/icons/edit_16.png)
+		!important;
+}
+
+.del {
+	background-image: url(#{request.contextPath}/images/icons/del_16.png)
+		!important;
+}
+
+.opts {
+	background-image: url(#{request.contextPath}/images/icons/opts_16.png)
+		!important;
+}
+
+.cancl {
+	background-image: url(#{request.contextPath}/images/icons/cancl_16.png)
+		!important;
+}
+
+.close {
+	background-image: url(#{request.contextPath}/images/icons/close_16.png)
+		!important;
+}
+
+.user {
+	background-image: url(#{request.contextPath}/images/icons/user_16.png)
+		!important;
+}
+
+.ui-datatable .ui-datatable-footer {
+	text-align: left;
+}
+</style>
+
+
+
+		<title><ui:insert name="title">Default title</ui:insert>
+		</title>
+		<ui:insert name="head"></ui:insert>
+		
+	</h:head>
+
+	<h:body>
+		<div id="header">
+			<div class="ui-widget ui-widget-header">
+				<table border="0" width="100%">
+					<tbody>
+						<tr>
+							<td><img
+								src="#{request.contextPath}/images/icons/web_64.png"></img></td>
+							<td align="left">
+								<h1>VOYAGER</h1></td>
+							<td width="100%" align="right">
+								<table border="0" width="80%">
+									<tbody>
+										<tr>
+											<td><img
+												src="#{request.contextPath}/images/icons/apps_16.png"></img>
+												Сервер: localhost</td>
+											<td align="right"><img
+												src="#{request.contextPath}/images/icons/hist_16.png"></img>
+												Время: <h:outputText value="#{app.date}">
+													<f:convertDateTime pattern="dd.MM.yyyy HH:mm" />
+												</h:outputText></td>
+										</tr>
+									</tbody>
+								</table>
+								<table border="0" width="50%">
+									<tbody>
+										<tr>
+											<td align="right"><p:button value="Вход" image="user"></p:button>
+											</td>
+										</tr>
+									</tbody>
+								</table></td>
+							<td></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+
+		<table border="0" width="97%">
+			<tbody>
+				<tr>
+					<td valign="top">
+
+						<div>
+							<ui:include src="left.xhtml" />
+						</div></td>
+					<td width="100%" valign="top">
+
+						<table border="0" width="100%">
+							<tbody>
+								<tr>
+									<td>
+										<div
+											class="ui-widget-content ui-corner-all ui-helper-clearfix sidebar">
+											<table border="0" width="100%">
+												<tbody>
+													<tr>
+														<td valign="middle"><ui:insert name="header_icon">
+																<!--     	Header area.  See comments below this line in the source. -->
+																<!--  include your header file or uncomment the include below and create header.xhtml in this directory -->
+																<!-- <ui:include src="header.xhtml"/> -->
+															</ui:insert></td>
+														<td valign="middle" width="100%">
+															<div class="caption">
+																<b> <ui:insert name="header">
+																		<!--     	Header area.  See comments below this line in the source. -->
+																		<!--  include your header file or uncomment the include below and create header.xhtml in this directory -->
+																		<!-- <ui:include src="header.xhtml"/> -->
+																	</ui:insert> </b>
+															</div></td>
+														<td valign="middle"><p:button value="?"></p:button></td>
+													</tr>
+												</tbody>
+											</table>
+										</div></td>
+								</tr>
+								<tr>
+									<td>
+										<div id="content">
+											<ui:insert name="content">
+                                                        Content area.  See comments below this line in the source.
+                                                        <!--  include your content file or uncomment the include below and create content.xhtml in this directory -->
+												<!-- <div> -->
+												<!-- <ui:include src="content.xhtml"/> -->
+												<!-- </div> -->
+											</ui:insert>
+										</div></td>
+								</tr>
+							</tbody>
+						</table></td>
+				</tr>
+			</tbody>
+		</table>
+		<br></br>
+
+
+		<div id="footer">
+			<div class="ui-widget ui-widget-header ui-corner-all">
+				<table border="0" width="90%">
+					<tbody>
+						<tr>
+							<td width="30%">
+								<p class="copyright">
+									©&nbsp;&nbsp;2011 &nbsp;•&nbsp; <a
+										href="http://www.politrend.kz">Politrend</a>.
+								</p></td>
+							<td><ui:insert name="footer">
+								</ui:insert></td>
+							<td></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</h:body>
+</f:view>
+</html>

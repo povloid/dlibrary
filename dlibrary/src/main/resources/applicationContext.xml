@@ -27,30 +27,27 @@
 	<!-- ******************************************************************** -->
 	<!-- <context:component-scan base-package="pk.home.voyager.dao" -->
 	<!-- scoped-proxy="interfaces" /> -->
-
-
 	<!-- <context:component-scan base-package="pk.home.voyager.service" -->
 	<!-- scoped-proxy="interfaces" /> -->
 	<!-- <context:component-scan base-package="pk.home.voyager.web.jsf" -->
 	<!-- scoped-proxy="interfaces" /> -->
+	
+	
+	
+	<context:component-scan base-package="pk.home.dlibrary.dao"/>
+	<context:component-scan base-package="pk.home.dlibrary.service"/>
+	
 
 	<!-- ******************************************************************** -->
 	<!-- Mark bean transactions as annotation driven -->
 	<!-- ******************************************************************** -->
 	<tx:annotation-driven transaction-manager="transactionManager" />
-
+	
+	
 
 	<bean id="entityManagerFactory"
 		class="org.springframework.orm.jpa.LocalEntityManagerFactoryBean">
 		<property name="persistenceUnitName" value="voyager" />
-<!-- 		<property name="jpaProperties"> -->
-<!-- 			<props> -->
-<!-- 				<prop key="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</prop> -->
-<!-- 				<prop key="hibernate.show_sql">true</prop> -->
-<!-- 				<prop key="hibernate.dialect">org.hibernate.dialect.DerbyDialect</prop> -->
-<!-- 				<prop key="hibernate.hbm2ddl.auto">create</prop> -->
-<!-- 			</props> -->
-<!-- 		</property> -->
 	</bean>
 
 	<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager"
@@ -61,6 +58,7 @@
 	</bean>
 
 	<bean id="jpaDialect" class="org.springframework.orm.jpa.vendor.HibernateJpaDialect" />
+
 
 	<!-- PostProcessors to perform exception translation on @Repository classes 
 		(from native exceptions such as JPA PersistenceExceptions to Spring's DataAccessException 

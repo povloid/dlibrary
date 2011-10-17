@@ -9,23 +9,23 @@
 		<class>pk.home.dlibrary.domain.Genre</class>
 		<class>pk.home.dlibrary.domain.Section</class>
 		<properties>
-		
-<!-- 			PostgreSQL -->
-			<property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5433/test"/>
-			<property name="javax.persistence.jdbc.user" value="test"/>
-			<property name="javax.persistence.jdbc.password" value="test"/>
-			<property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver"/>
-			<property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect"/>
 
-<!-- Firebird - необходим jeybird-full -->
+			<!-- PostgreSQL -->
+			<property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5433/test" />
+			<property name="javax.persistence.jdbc.user" value="test" />
+			<property name="javax.persistence.jdbc.password" value="test" />
+			<property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver" />
+			<property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect" />
 
-<!-- 			<property name="javax.persistence.jdbc.url" value="jdbc:firebirdsql://localhost:3050//home/dev_sport/db1.fdb"/> -->
-<!-- 			<property name="javax.persistence.jdbc.user" value="sysdba"/> -->
-<!-- 			<property name="javax.persistence.jdbc.password" value="paradox"/> -->
-<!-- 			<property name="javax.persistence.jdbc.driver" value="org.firebirdsql.jdbc.FBDriver"/> -->
-<!-- 			<property name="hibernate.dialect" value="org.hibernate.dialect.FirebirdDialect"/>			 -->
-			
-			<property name="hibernate.cache.provider_class" value="org.hibernate.cache.NoCacheProvider"/>
+			<!-- Firebird - необходим jeybird-full -->
+
+			<!-- <property name="javax.persistence.jdbc.url" value="jdbc:firebirdsql://localhost:3050//home/dev_sport/db1.fdb"/> -->
+			<!-- <property name="javax.persistence.jdbc.user" value="sysdba"/> -->
+			<!-- <property name="javax.persistence.jdbc.password" value="paradox"/> -->
+			<!-- <property name="javax.persistence.jdbc.driver" value="org.firebirdsql.jdbc.FBDriver"/> -->
+			<!-- <property name="hibernate.dialect" value="org.hibernate.dialect.FirebirdDialect"/> -->
+
+			<property name="hibernate.cache.provider_class" value="org.hibernate.cache.NoCacheProvider" />
 
 			<property name="hibernate.show_sql" value="true" />
 			<property name="hibernate.hbm2ddl.auto" value="update" />

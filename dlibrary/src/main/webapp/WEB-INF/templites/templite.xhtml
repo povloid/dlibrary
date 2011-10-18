@@ -12,7 +12,7 @@
 		<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
 		<link type="text/css" rel="stylesheet"
 			href="#{request.contextPath}/css/jsfdefault_1.css" />
-<!-- 		<link type="text/css" rel="stylesheet" href="#{request.contextPath}/css/default.css" /> -->
+		<!-- 		<link type="text/css" rel="stylesheet" href="#{request.contextPath}/css/default.css" /> -->
 
 		<style type="text/css">
 .home {
@@ -67,10 +67,9 @@
 
 
 
-		<title><ui:insert name="title">Default title</ui:insert>
-		</title>
+		<title><ui:insert name="title">Default title</ui:insert></title>
 		<ui:insert name="head"></ui:insert>
-		
+
 	</h:head>
 
 	<h:body>
@@ -80,16 +79,17 @@
 					<tbody>
 						<tr>
 							<td><img
-								src="#{request.contextPath}/images/icons/web_64.png"></img></td>
+								src="#{request.contextPath}/images/icons/emblem-library.png"></img></td>
 							<td align="left">
-								<h1>VOYAGER</h1></td>
+								<h1>БИБЛИОТЕКА</h1>
+							</td>
 							<td width="100%" align="right">
 								<table border="0" width="80%">
 									<tbody>
 										<tr>
-											<td><img
-												src="#{request.contextPath}/images/icons/apps_16.png"></img>
-												Сервер: localhost</td>
+											<!-- 											<td><img -->
+											<!-- 												src="#{request.contextPath}/images/icons/apps_16.png"></img> -->
+											<!-- 												Сервер: dlibrary</td> -->
 											<td align="right"><img
 												src="#{request.contextPath}/images/icons/hist_16.png"></img>
 												Время: <h:outputText value="#{app.date}">
@@ -105,7 +105,8 @@
 											</td>
 										</tr>
 									</tbody>
-								</table></td>
+								</table>
+							</td>
 							<td></td>
 						</tr>
 					</tbody>
@@ -120,7 +121,8 @@
 
 						<div>
 							<ui:include src="left.xhtml" />
-						</div></td>
+						</div>
+					</td>
 					<td width="100%" valign="top">
 
 						<table border="0" width="100%">
@@ -143,13 +145,16 @@
 																		<!--     	Header area.  See comments below this line in the source. -->
 																		<!--  include your header file or uncomment the include below and create header.xhtml in this directory -->
 																		<!-- <ui:include src="header.xhtml"/> -->
-																	</ui:insert> </b>
-															</div></td>
+																	</ui:insert>
+																</b>
+															</div>
+														</td>
 														<td valign="middle"><p:button value="?"></p:button></td>
 													</tr>
 												</tbody>
 											</table>
-										</div></td>
+										</div>
+									</td>
 								</tr>
 								<tr>
 									<td>
@@ -161,10 +166,12 @@
 												<!-- <ui:include src="content.xhtml"/> -->
 												<!-- </div> -->
 											</ui:insert>
-										</div></td>
+										</div>
+									</td>
 								</tr>
 							</tbody>
-						</table></td>
+						</table>
+					</td>
 				</tr>
 			</tbody>
 		</table>
@@ -180,7 +187,8 @@
 								<p class="copyright">
 									©&nbsp;&nbsp;2011 &nbsp;•&nbsp; <a
 										href="http://www.politrend.kz">Politrend</a>.
-								</p></td>
+								</p>
+							</td>
 							<td><ui:insert name="footer">
 								</ui:insert></td>
 							<td></td>

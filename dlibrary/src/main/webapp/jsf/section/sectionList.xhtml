@@ -1,0 +1,71 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.prime.com.tr/ui">
+
+<ui:composition template="/WEB-INF/templites/templite.xhtml">
+	<ui:define name="title">
+        Справочник-секций
+    </ui:define>
+
+	<ui:define name="header_icon">
+		<img src="#{request.contextPath}/images/icons/addbk_24.png"></img>
+	</ui:define>
+
+	<ui:define name="header">
+        Справочник-секций
+    </ui:define>
+
+	<ui:define name="content">
+		<h:form>
+		
+			<!--  f:event type="preRenderView" listener="#{LTypeComponent.preRenderView}" / -->
+			
+<!-- 			<p:dataTable id="dta" value="#{LTypeComponent.list()}" -->
+<!-- 				selection="#{LTypeComponent.selectedObject}" var="item" -->
+				
+<!-- 				emptyMessage="Таблица пустая" rowKey="#{item.id}" -->
+<!-- 				selectionMode="single" -->
+<!-- 				scrollable="true" resizableColumns="true" -->
+<!-- 				> -->
+				
+				
+<!-- 				<f:facet name="header">   -->
+<!--                     LType -->
+<!--                 </f:facet> -->
+
+<!-- 				<p:column headerText="Id" style="width:125px"> -->
+<!-- 					<h:outputText value="#{item.id}" /> -->
+<!-- 				</p:column> -->
+<!-- 				<p:column headerText="KeyName" style="width:125px"> -->
+<!-- 					<h:outputText value="#{item.keyName}" /> -->
+<!-- 				</p:column> -->
+<!-- 				<p:column headerText="Description" style="width:125px"> -->
+<!-- 					<h:outputText value="#{item.description}" /> -->
+<!-- 				</p:column> -->
+
+<!-- 				<f:facet name="footer"> -->
+<!-- 					<p:commandButton value="View" image="ui-icon ui-icon-search" -->
+<!-- 						update="form:display" oncomplete="carDialog.show()" /> -->
+<!-- 					<p:commandButton value="Доб." image="ui-icon add" ajax="false" -->
+<!-- 						action="#{LTypeComponent.create()}" /> -->
+<!-- 					<p:commandButton value="Ред." image="ui-icon edit" ajax="false" -->
+<!-- 						action="#{LTypeComponent.edit()}" /> -->
+<!-- 					<p:commandButton value="Уд." image="ui-icon del" ajax="false" -->
+<!-- 						action="#{LTypeComponent.delete()}" /> -->
+<!-- 				</f:facet> -->
+<!-- 			</p:dataTable> -->
+
+
+		</h:form>
+	</ui:define>
+
+	<ui:define name="footer">
+        footer
+    </ui:define>
+</ui:composition>
+</html>

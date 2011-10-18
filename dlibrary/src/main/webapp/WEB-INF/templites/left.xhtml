@@ -35,28 +35,18 @@
 			<tr>
 				<td>
 										<!-- model="#{navigator.model}" -->
-				<p:menu type="tiered" style="width:200px">
+				<p:menu style="width:200px">
 						
 
 						<p:menuitem value="На главную" url="/" icon="ui-icon home" />
 						<!-- -->
-						<p:menuitem value="Новости" url="/" icon="ui-icon home" />
+						
 						<!-- -->
 						<p:submenu label="Справочники ..." icon="ui-icon addbk">
-							<p:menuitem value="Тип места" icon="ui-icon addbk"
-								url="/faces/jsf/ltype/listLtype.xhtml" />
-							<p:menuitem value="Место" icon="ui-icon addbk"
-								url="/faces/jsf/location/listLocation.xhtml" />
-							<p:menuitem value="Тип отдыха" icon="ui-icon addbk"
-								url="/faces/jsf/ResortType/listResortType.xhtml" />
-							<p:menuitem value="Отель" icon="ui-icon addbk"
-								url="/faces/jsf/Hotel/listHotel.xhtml" />
-
+							<p:menuitem value="Секции" icon="ui-icon addbk"
+								url="/faces/jsf/section/sectionList.xhtml" />
 						</p:submenu>
-						<p:submenu label="Системн. справочн..." icon="ui-icon addbk">
-							<p:menuitem value="AProperties" icon="ui-icon addbk"
-								url="/faces/jsf/aproperties/listAproperties.xhtml" />
-						</p:submenu>
+						
 					</p:menu></td>
 			</tr>
 		</tbody>

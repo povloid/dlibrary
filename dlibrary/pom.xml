@@ -278,6 +278,12 @@
 			<version>1.0.1</version>
 		</dependency>
 		
+		<dependency>
+			<groupId>org.primefaces.themes</groupId>
+			<artifactId>redmond</artifactId>
+			<version>1.0.1</version>
+		</dependency>
+		
 
 		<!-- JSR 303 validation -->
 		<dependency>
@@ -342,11 +348,11 @@
 			<version>9.0-801.jdbc3</version>
 		</dependency>
 		
-		<dependency>
-			<groupId>org.firebirdsql.jdbc</groupId>
-			<artifactId>jaybird</artifactId>
-			<version>2.1.6</version>
-		</dependency>
+<!-- 		<dependency> -->
+<!-- 			<groupId>org.firebirdsql.jdbc</groupId> -->
+<!-- 			<artifactId>jaybird</artifactId> -->
+<!-- 			<version>2.1.6</version> -->
+<!-- 		</dependency> -->
 	</dependencies>
 	
 

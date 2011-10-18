@@ -36,6 +36,7 @@
 	
 	<context:component-scan base-package="pk.home.dlibrary.dao"/>
 	<context:component-scan base-package="pk.home.dlibrary.service"/>
+	<context:component-scan base-package="pk.home.dlibrary.jsf"/>
 	
 
 	<!-- ******************************************************************** -->

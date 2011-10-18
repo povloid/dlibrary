@@ -27,7 +27,7 @@ public abstract class AbstractBasicService<T extends Object> {
 
 	@Transactional
 	public void remove(T object) throws Exception {
-		getAbstractBasicDAO().remove(object);
+		getAbstractBasicDAO().remove(getAbstractBasicDAO().getManagedEntity(object));
 	}
 
 	@Transactional

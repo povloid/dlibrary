@@ -27,5 +27,10 @@ public class SectionDAO extends AbstractBasicDAO<Section>{
 	public EntityManager getEntityManager() {
 		return entityManager;
 	}
+
+	@Override
+	public Object getPrimaryKey(Section o) {
+		return o.getId();
+	}
 	
 }

@@ -42,6 +42,14 @@ public abstract class AbstractBasicDAO<T extends Object> {
 	 * @return
 	 */
 	protected abstract Class<T> getTClass();
+	
+	
+	/**
+	 * Получить первичный ключ
+	 * @param o
+	 * @return
+	 */
+	public abstract Object getPrimaryKey(T o);
 
 	@Transactional
 	public List<T> getAllEntities() throws Exception {
@@ -75,6 +83,12 @@ public abstract class AbstractBasicDAO<T extends Object> {
 			return getEntityManager().find(getTClass(), key);
 		}
 	}
+	
+	@Transactional
+	public T getManagedEntity(T unmanagedBean) throws Exception {
+		return getEntityManager().find(getTClass(), getPrimaryKey(unmanagedBean));
+	}
+	
 
 	@Transactional
 	public long count() throws Exception {

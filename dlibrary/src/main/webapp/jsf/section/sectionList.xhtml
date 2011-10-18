@@ -9,7 +9,7 @@
 
 <ui:composition template="/WEB-INF/templites/templite.xhtml">
 	<ui:define name="title">
-        Справочник-секций
+        Справочник секций
     </ui:define>
 
 	<ui:define name="header_icon">
@@ -17,49 +17,128 @@
 	</ui:define>
 
 	<ui:define name="header">
-        Справочник-секций
+        Справочник секций
     </ui:define>
 
 	<ui:define name="content">
-		<h:form>
-		
-			<!--  f:event type="preRenderView" listener="#{LTypeComponent.preRenderView}" / -->
-			
-<!-- 			<p:dataTable id="dta" value="#{LTypeComponent.list()}" -->
-<!-- 				selection="#{LTypeComponent.selectedObject}" var="item" -->
-				
-<!-- 				emptyMessage="Таблица пустая" rowKey="#{item.id}" -->
-<!-- 				selectionMode="single" -->
-<!-- 				scrollable="true" resizableColumns="true" -->
-<!-- 				> -->
-				
-				
-<!-- 				<f:facet name="header">   -->
-<!--                     LType -->
-<!--                 </f:facet> -->
 
-<!-- 				<p:column headerText="Id" style="width:125px"> -->
-<!-- 					<h:outputText value="#{item.id}" /> -->
-<!-- 				</p:column> -->
-<!-- 				<p:column headerText="KeyName" style="width:125px"> -->
-<!-- 					<h:outputText value="#{item.keyName}" /> -->
-<!-- 				</p:column> -->
-<!-- 				<p:column headerText="Description" style="width:125px"> -->
-<!-- 					<h:outputText value="#{item.description}" /> -->
-<!-- 				</p:column> -->
 
-<!-- 				<f:facet name="footer"> -->
-<!-- 					<p:commandButton value="View" image="ui-icon ui-icon-search" -->
-<!-- 						update="form:display" oncomplete="carDialog.show()" /> -->
-<!-- 					<p:commandButton value="Доб." image="ui-icon add" ajax="false" -->
-<!-- 						action="#{LTypeComponent.create()}" /> -->
-<!-- 					<p:commandButton value="Ред." image="ui-icon edit" ajax="false" -->
-<!-- 						action="#{LTypeComponent.edit()}" /> -->
-<!-- 					<p:commandButton value="Уд." image="ui-icon del" ajax="false" -->
-<!-- 						action="#{LTypeComponent.delete()}" /> -->
-<!-- 				</f:facet> -->
-<!-- 			</p:dataTable> -->
 
+		<h:form id="form">
+
+			<f:event type="preRenderView" listener="#{sectionControl.init}" />
+
+			<p:growl id="msgs" showDetail="true" />
+
+			<p:commandButton ajax="false" image="ui-icon add" title="Добавить"
+				action="#{sectionControl.add()}">
+				<f:setPropertyActionListener
+					value="#{'/jsf/section/sectionList.xhtml'}"
+					target="#{sectionControl.retUrl}" />
+			</p:commandButton>
+
+			<p:dataTable id="table1" var="row" value="#{sectionControl.list}"
+				emptyMessage="Таблица пустая">
+
+
+				<f:facet name="header">
+				 Список
+			    </f:facet>
+
+
+
+
+				<p:column headerText="id">
+					<h:outputText value="#{row.id}" />
+				</p:column>
+
+				<p:column headerText="Наименование">
+					<h:outputText value="#{row.keyName}" />
+				</p:column>
+
+				<p:column headerText="Описание">
+					<h:outputText value="#{row.description}" />
+				</p:column>
+
+				<p:column style="width:100px">
+					<h:panelGrid columns="3" cellpadding="2" styleClass="actions">
+						<p:commandButton update=":form:display"
+							oncomplete="carDialog.show()" image="ui-icon ui-icon-search"
+							title="Просмотр">
+							<f:setPropertyActionListener value="#{'VIEW'}"
+								target="#{sectionControl.mode}" />
+							<f:setPropertyActionListener value="#{row}"
+								target="#{sectionControl.selected}" />
+						</p:commandButton>
+						<p:commandButton update=":form:display" ajax="false"
+							image="ui-icon edit" action="#{sectionControl.edit()}"
+							title="Редактировать">
+							<f:setPropertyActionListener
+								value="#{'/jsf/section/sectionList.xhtml'}"
+								target="#{sectionControl.retUrl}" />
+							<f:setPropertyActionListener value="#{row}"
+								target="#{sectionControl.selected}" />
+						</p:commandButton>
+						<p:commandButton update=":form:display" ajax="false"
+							image="ui-icon del" action="#{sectionControl.del()}"
+							title="Удалить">
+							<f:setPropertyActionListener
+								value="#{'/jsf/section/sectionList.xhtml'}"
+								target="#{sectionControl.retUrl}" />
+							<f:setPropertyActionListener value="#{row}"
+								target="#{sectionControl.selected}" />
+						</p:commandButton>
+					</h:panelGrid>
+				</p:column>
+
+			</p:dataTable>
+
+
+
+			<p:dialog header="Car Detail" widgetVar="carDialog" resizable="false"
+				id="carDlg" showEffect="fade" hideEffect="explode" modal="true">
+
+				<h:panelGrid id="display" columns="2" cellpadding="4"
+					style="margin:0 auto;">
+
+					<f:facet name="header">  
+               Детали:
+            </f:facet>
+
+					<h:outputText value="id:" />
+					<h:panelGroup>
+						<h:outputText value="#{sectionControl.selected.id}"
+							style="font-weight:bold" />
+
+					</h:panelGroup>
+
+					<h:outputText value="Наименование:" />
+					<h:panelGroup>
+						<h:outputText value="#{sectionControl.selected.keyName}"
+							style="font-weight:bold" />
+
+					</h:panelGroup>
+
+					<h:outputText value="Описание:" />
+					<h:panelGroup>
+						<h:outputText value="#{sectionControl.selected.description}"
+							style="font-weight:bold; width: 300px"/>
+
+					</h:panelGroup>
+
+
+
+					<f:facet name="footer">
+						<p:outputPanel rendered="#{tableBean.editMode}" layout="block"
+							style="text-align:right">
+							<p:commandButton value="Закрыть" onclick="carDialog.hide()"
+								type="button" image="ui-icon ui-icon-close" />
+
+						</p:outputPanel>
+					</f:facet>
+				</h:panelGrid>
+
+			</p:dialog>
 
 		</h:form>
 	</ui:define>

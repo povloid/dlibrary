@@ -24,7 +24,23 @@
 											<b>Навигация</b>
 										</div>
 									</td>
-									<td valign="middle"><p:button value="?"></p:button></td>
+									<td valign="middle">
+										<h:form>
+											<p:commandButton value="?" onclick="navigationPanelHelp.show();" />
+											<p:confirmDialog
+												message="Это область содержащая меню навигации. При выборе соответствующего пункта будет производиться переключение содержимого рабочей области с права."
+												width="200" showEffect="explode" hideEffect="explode"
+												header="Справка..." severity="info"
+												widgetVar="navigationPanelHelp">
+
+
+												<p:commandButton value="Закрыть"
+													onclick="navigationPanelHelp.hide()" type="button" />
+
+											</p:confirmDialog>
+										</h:form>
+										
+									</td>
 								</tr>
 							</tbody>
 						</table>
@@ -34,20 +50,20 @@
 
 			<tr>
 				<td>
-										<!-- model="#{navigator.model}" -->
-				<p:menu style="width:200px">
-						
+					<!-- model="#{navigator.model}" --> <p:menu style="width:200px">
+
 
 						<p:menuitem value="На главную" url="/" icon="ui-icon home" />
 						<!-- -->
-						
+
 						<!-- -->
 						<p:submenu label="Справочники ..." icon="ui-icon addbk">
 							<p:menuitem value="Секции" icon="ui-icon addbk"
 								url="/faces/jsf/section/sectionList.xhtml" />
 						</p:submenu>
-						
-					</p:menu></td>
+
+					</p:menu>
+				</td>
 			</tr>
 		</tbody>
 	</table>

@@ -149,7 +149,21 @@
 																</b>
 															</div>
 														</td>
-														<td valign="middle"><p:button value="?"></p:button></td>
+														<td valign="middle"><h:form>
+																<p:commandButton value="?"
+																	onclick="contentPanelHelp.show();" />
+																<p:confirmDialog message="Это область рабочего пространства" width="200"
+																	showEffect="explode" hideEffect="explode"
+																	header="Справка..." severity="info"
+																	widgetVar="contentPanelHelp">
+
+
+																	<p:commandButton value="Закрыть"
+																		onclick="contentPanelHelp.hide()" type="button" />
+
+																</p:confirmDialog>
+															</h:form>
+															</td>
 													</tr>
 												</tbody>
 											</table>

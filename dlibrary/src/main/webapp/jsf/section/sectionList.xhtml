@@ -22,23 +22,40 @@
 
 	<ui:define name="content">
 
-
+		<f:metadata>
+			<f:event type="preRenderView" listener="#{sectionControl.init}" />
+			<!--  f:event type="postAddToView" listener="#{sectionControl.update}" / -->
+			<!--  f:event type="javax.faces.event.PostRestoreStateEvent" listener="#{sectionControl.update}" / -->
+			<f:viewParam name="page" value="#{sectionControl.page}" />
+			<f:viewParam name="retUrl" value="#{sectionControl.retUrl}" />
+		</f:metadata>
 
 		<h:form id="form">
 
-			<f:event type="preRenderView" listener="#{sectionControl.init}" />
-
 			<p:growl id="msgs" showDetail="true" />
 
-			<p:commandButton ajax="false" image="ui-icon add" title="Добавить"
+			<p:commandButton ajax="false" image="ui-icon add"
+				title="Добавить;page=#{sectionControl.page}" id="addButton"
 				action="#{sectionControl.add()}">
-				<f:setPropertyActionListener
-					value="#{'/jsf/section/sectionList.xhtml'}"
-					target="#{sectionControl.retUrl}" />
+
+				<f:param id="addButtonP1" name="retUrl"
+					value="/jsf/section/sectionList.xhtml?faces-redirect=true&amp;page=#{sectionControl.page}" />
+				<!-- 				<f:setPropertyActionListener -->
+				<!-- 					value="/jsf/section/sectionList.xhtml?faces-redirect=true&amp;page=#{sectionControl.page}" -->
+				<!-- 					target="#{sectionControl.retUrl}" /> -->
+			</p:commandButton>
+			<p:commandButton update="addButton" image="ui-icon update"
+				title="Обновить">
 			</p:commandButton>
 
-			<p:dataTable id="table1" var="row" value="#{sectionControl.list}"
-				emptyMessage="Таблица пустая">
+			<p:dataTable id="table1" var="row" page="#{sectionControl.page}"
+				value="#{sectionControl.dataModel}" paginator="true" rows="10"
+				lazy="true" widgetVar="dataTable1"
+				paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+				rowsPerPageTemplate="5,10,15" emptyMessage="Таблица пустая">
+
+				<p:ajax event="page" update=":form:addButton  :form:addButtonP1">
+				</p:ajax>
 
 
 				<f:facet name="header">
@@ -48,11 +65,11 @@
 
 
 
-				<p:column headerText="id">
+				<p:column headerText="id" sortBy="#{row.id}">
 					<h:outputText value="#{row.id}" />
 				</p:column>
 
-				<p:column headerText="Наименование">
+				<p:column headerText="Наименование" sortBy="#{row.keyName}">
 					<h:outputText value="#{row.keyName}" />
 				</p:column>
 
@@ -61,34 +78,30 @@
 				</p:column>
 
 				<p:column style="width:100px">
-					<h:panelGrid columns="3" cellpadding="2" styleClass="actions">
-						<p:commandButton update=":form:display"
-							oncomplete="carDialog.show()" image="ui-icon ui-icon-search"
-							title="Просмотр">
-							<f:setPropertyActionListener value="#{'VIEW'}"
-								target="#{sectionControl.mode}" />
-							<f:setPropertyActionListener value="#{row}"
-								target="#{sectionControl.selected}" />
-						</p:commandButton>
-						<p:commandButton update=":form:display" ajax="false"
-							image="ui-icon edit" action="#{sectionControl.edit()}"
-							title="Редактировать">
-							<f:setPropertyActionListener
-								value="#{'/jsf/section/sectionList.xhtml'}"
-								target="#{sectionControl.retUrl}" />
-							<f:setPropertyActionListener value="#{row}"
-								target="#{sectionControl.selected}" />
-						</p:commandButton>
-						<p:commandButton update=":form:display" ajax="false"
-							image="ui-icon del" action="#{sectionControl.del()}"
-							title="Удалить">
-							<f:setPropertyActionListener
-								value="#{'/jsf/section/sectionList.xhtml'}"
-								target="#{sectionControl.retUrl}" />
-							<f:setPropertyActionListener value="#{row}"
-								target="#{sectionControl.selected}" />
-						</p:commandButton>
-					</h:panelGrid>
+					<p:commandButton update=":form:display"
+						oncomplete="carDialog.show()" image="ui-icon ui-icon-search"
+						title="Просмотр">
+						<f:setPropertyActionListener value="#{'VIEW'}"
+							target="#{sectionControl.mode}" />
+						<f:setPropertyActionListener value="#{row}"
+							target="#{sectionControl.selected}" />
+					</p:commandButton>
+					<p:commandButton update=":form:display" ajax="false"
+						image="ui-icon edit" action="#{sectionControl.edit()}"
+						title="Редактировать;page=#{sectionControl.page}">
+						<f:param name="retUrl"
+							value="/jsf/section/sectionList.xhtml?faces-redirect=true&amp;page=#{sectionControl.page}"/>
+						<f:setPropertyActionListener value="#{row}"
+							target="#{sectionControl.selected}" />
+					</p:commandButton>
+					<p:commandButton update=":form:display" ajax="false"
+						image="ui-icon del" action="#{sectionControl.del()}"
+						title="Удалить;page=#{sectionControl.page}">
+						<f:param name="retUrl"
+							value="/jsf/section/sectionList.xhtml?faces-redirect=true&amp;page=#{sectionControl.page}"/>
+						<f:setPropertyActionListener value="#{row}"
+							target="#{sectionControl.selected}" />
+					</p:commandButton>
 				</p:column>
 
 			</p:dataTable>
@@ -122,7 +135,7 @@
 					<h:outputText value="Описание:" />
 					<h:panelGroup>
 						<h:outputText value="#{sectionControl.selected.description}"
-							style="font-weight:bold; width: 300px"/>
+							style="font-weight:bold; width: 300px" />
 
 					</h:panelGroup>
 

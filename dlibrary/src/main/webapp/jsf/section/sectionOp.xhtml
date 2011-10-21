@@ -21,6 +21,12 @@
     </ui:define>
 
 	<ui:define name="content">
+		<f:metadata>
+<!-- 			<f:event type="preRenderView" listener="#{sectionControl.init}" /> -->
+			
+			<f:viewParam name="retUrl" value="#{sectionControl.retUrl}" />
+		</f:metadata>
+	
 
 		<h:form>
 			<p:commandButton ajax="false" immediate="true" image="ui-icon cancl"

@@ -2,11 +2,15 @@ package pk.home.dlibrary.dao;
 
 import java.util.List;
 import javax.persistence.Query;
+import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import org.springframework.transaction.annotation.Transactional;
+
+import pk.home.dlibrary.domain.Section_;
 
 public abstract class AbstractBasicDAO<T extends Object> {
 
@@ -42,32 +46,70 @@ public abstract class AbstractBasicDAO<T extends Object> {
 	 * @return
 	 */
 	protected abstract Class<T> getTClass();
-	
-	
+
 	/**
 	 * Получить первичный ключ
+	 * 
 	 * @param o
 	 * @return
 	 */
 	public abstract Object getPrimaryKey(T o);
 
+	public enum SortOrderType {
+		ASC, DESC
+	}
+
 	@Transactional
 	public List<T> getAllEntities() throws Exception {
-		return getAllEntities(true, -1, -1);
+		return getAllEntities(true, -1, -1, null, SortOrderType.ASC);
+	}
+
+	@Transactional
+	public List<T> getAllEntities(SingularAttribute<T, ?> orderByAttribute, SortOrderType sortOrder)
+			throws Exception {
+		return getAllEntities(true, -1, -1, orderByAttribute, sortOrder);
 	}
 
 	@Transactional
 	public List<T> getAllEntities(int firstResult, int maxResults)
 			throws Exception {
-		return getAllEntities(false, maxResults, firstResult);
+		return getAllEntities(false, maxResults, firstResult, null, SortOrderType.ASC);
 	}
 
 	@Transactional
-	public List<T> getAllEntities(boolean all, int firstResult, int maxResults) {
-		CriteriaQuery<T> cq = getEntityManager().getCriteriaBuilder()
-				.createQuery(getTClass());
-		cq.select(cq.from(getTClass()));
+	public List<T> getAllEntities(int firstResult, int maxResults,
+			SingularAttribute<T, ?> orderByAttribute, SortOrderType sortOrder) throws Exception {
+		return getAllEntities(false, maxResults, firstResult, orderByAttribute, sortOrder);
+	}
+
+	@Transactional
+	public List<T> getAllEntities(boolean all, int firstResult, int maxResults,
+			SingularAttribute<T, ?> orderByAttribute, SortOrderType sortOrder) {
+
+		CriteriaBuilder cb = getEntityManager().getCriteriaBuilder(); // Только
+																		// так
+																		// заработало
+		CriteriaQuery<T> cq = cb.createQuery(getTClass());
+		Root<T> t = cq.from(getTClass());
+
+		if (orderByAttribute != null) {
+			switch (sortOrder) {
+			case DESC:
+				cq.orderBy(cb.desc(t.get(orderByAttribute)));
+				break;
+			case ASC:
+				cq.orderBy(cb.asc(t.get(orderByAttribute)));
+				break;
+
+			default:
+				cq.orderBy(cb.asc(t.get(orderByAttribute)));
+				break;
+			}
+			
+		}
+
 		TypedQuery<T> q = getEntityManager().createQuery(cq);
+
 		if (!all) {
 			q.setMaxResults(maxResults);
 			q.setFirstResult(firstResult);
@@ -83,12 +125,12 @@ public abstract class AbstractBasicDAO<T extends Object> {
 			return getEntityManager().find(getTClass(), key);
 		}
 	}
-	
+
 	@Transactional
 	public T getManagedEntity(T unmanagedBean) throws Exception {
-		return getEntityManager().find(getTClass(), getPrimaryKey(unmanagedBean));
+		return getEntityManager().find(getTClass(),
+				getPrimaryKey(unmanagedBean));
 	}
-	
 
 	@Transactional
 	public long count() throws Exception {
@@ -172,8 +214,8 @@ public abstract class AbstractBasicDAO<T extends Object> {
 	@Transactional
 	public T executeQueryByNameSingleResult(String queryName,
 			Object... parameters) {
-		TypedQuery<T> query = createNamedQuery(queryName, DEFAULT_FIRST_RESULT_INDEX,
-				1, parameters);
+		TypedQuery<T> query = createNamedQuery(queryName,
+				DEFAULT_FIRST_RESULT_INDEX, 1, parameters);
 		return (T) query.getSingleResult();
 	}
 
@@ -199,22 +241,23 @@ public abstract class AbstractBasicDAO<T extends Object> {
 	@Transactional
 	public List<T> executeQueryByName(String queryName, Integer firstResult,
 			Integer maxResults, Object... parameters) {
-		TypedQuery<T> query = createNamedQuery(queryName, firstResult, maxResults,
-				parameters);
+		TypedQuery<T> query = createNamedQuery(queryName, firstResult,
+				maxResults, parameters);
 		return query.getResultList();
 	}
 
 	@Transactional
-	public TypedQuery<T> createNamedQuery(String queryName, Integer firstResult,
-			Integer maxResults) {
+	public TypedQuery<T> createNamedQuery(String queryName,
+			Integer firstResult, Integer maxResults) {
 		return createNamedQuery(queryName, firstResult, maxResults,
 				(Object[]) null);
 	}
 
 	@Transactional
-	public TypedQuery<T> createNamedQuery(String queryName, Integer firstResult,
-			Integer maxResults, Object... parameters) {
-		TypedQuery<T> query = getEntityManager().createNamedQuery(queryName, getTClass());
+	public TypedQuery<T> createNamedQuery(String queryName,
+			Integer firstResult, Integer maxResults, Object... parameters) {
+		TypedQuery<T> query = getEntityManager().createNamedQuery(queryName,
+				getTClass());
 		if (parameters != null) {
 			for (int i = 0; i < parameters.length; i++) {
 				query.setParameter(i + 1, parameters[i]);

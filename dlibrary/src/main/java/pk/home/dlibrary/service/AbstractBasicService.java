@@ -1,8 +1,12 @@
 package pk.home.dlibrary.service;
 
 import java.util.List;
+
+import javax.persistence.metamodel.SingularAttribute;
+
 import org.springframework.transaction.annotation.Transactional;
 import pk.home.dlibrary.dao.AbstractBasicDAO;
+import pk.home.dlibrary.dao.AbstractBasicDAO.SortOrderType;
 
 public abstract class AbstractBasicService<T extends Object> {
 
@@ -41,10 +45,24 @@ public abstract class AbstractBasicService<T extends Object> {
 	}
 
 	@Transactional
+	public List<T> getAllEntities(SingularAttribute<T, ?> orderByAttribute, SortOrderType sortOrder) throws Exception {
+		return getAbstractBasicDAO().getAllEntities(orderByAttribute, sortOrder);
+	}
+	
+	
+	@Transactional
 	public List<T> getAllEntities(int maxResults, int firstResult)
 			throws Exception {
 		return getAbstractBasicDAO().getAllEntities(maxResults, firstResult);
 	}
+	
+	@Transactional
+	public List<T> getAllEntities(int firstResult, int maxResults, 
+			SingularAttribute<T, ?> orderByAttribute, SortOrderType sortOrder)
+			throws Exception {
+		return getAbstractBasicDAO().getAllEntities(false, maxResults, firstResult, orderByAttribute, sortOrder);
+	}
+	
 
 	@Transactional
 	public long count() throws Exception {

@@ -1,10 +1,21 @@
 package pk.home.dlibrary.jsf;
 
 import java.io.Serializable;
+import java.util.List;
+import java.util.Map;
+
+import javax.faces.component.UIComponent;
+import javax.persistence.metamodel.SingularAttribute;
+
+import org.primefaces.model.LazyDataModel;
+import org.primefaces.model.SortOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
+
+import pk.home.dlibrary.dao.AbstractBasicDAO.SortOrderType;
 import pk.home.dlibrary.domain.Section;
+import pk.home.dlibrary.domain.Section_;
 import pk.home.dlibrary.service.SectionService;
 
 /**
@@ -17,6 +28,8 @@ import pk.home.dlibrary.service.SectionService;
 public class SectionCintrol extends AbstractBasicControl<Section> implements
 		Serializable {
 
+	
+
 	/**
 	 * 
 	 */
@@ -27,8 +40,28 @@ public class SectionCintrol extends AbstractBasicControl<Section> implements
 
 	@Override
 	public void aInit() throws Exception {
-		this.list = sectionService.getAllEntities();
+		
 	}
+	
+	@Override
+	protected void aUpdate() throws Exception {
+		
+	}
+	
+	
+	@Override
+	protected List<Section> aload(LazyDataModel<Section> dataModel, int first, int pageSize, String sortField,
+			SortOrder sortOrder, Map<String, String> filters, SortOrderType sot) throws Exception {
+		dataModel.setRowCount((int) sectionService.count());
+		
+		SingularAttribute<Section, ?> orderByAttribute = Section_.id;
+		if(sortField != null && sortField.equals("keyName")){
+			orderByAttribute = Section_.keyName;
+		}
+		
+		return sectionService.getAllEntities(pageSize,first, orderByAttribute, sot);
+	}
+	
 
 	@Override
 	protected String aAdd() throws Exception {
@@ -65,5 +98,9 @@ public class SectionCintrol extends AbstractBasicControl<Section> implements
 		sectionService.remove(edited);
 		return this.retUrl;
 	}
+
+	
+
+	
 
 }

@@ -45,9 +45,9 @@
 				<!-- 					value="/jsf/section/sectionList.xhtml?faces-redirect=true&amp;page=#{sectionControl.page}" -->
 				<!-- 					target="#{sectionControl.retUrl}" /> -->
 			</p:commandButton>
-			<p:commandButton update="addButton" image="ui-icon update"
-				title="Обновить">
-			</p:commandButton>
+			<!-- 			<p:commandButton update="addButton" image="ui-icon update" -->
+			<!-- 				title="Обновить"> -->
+			<!-- 			</p:commandButton> -->
 
 			<p:dataTable id="table1" var="row" page="#{sectionControl.page}"
 				value="#{sectionControl.dataModel}" paginator="true"
@@ -81,7 +81,6 @@
 								target="#{sectionControl.csortOrder2}" />
 							<h:outputText value="№" />
 						</p:commandLink>
-
 					</f:facet>
 					<h:outputText value="#{row.id}" />
 				</p:column>
@@ -108,7 +107,7 @@
 					<h:outputText value="#{row.description}" />
 				</p:column>
 
-				<p:column style="width:100px">
+				<p:column style="width:100px !important" headerText="Действия">
 					<p:commandButton update=":form:display"
 						oncomplete="carDialog.show()" image="ui-icon ui-icon-search"
 						title="Просмотр">
@@ -139,17 +138,17 @@
 
 
 
-			<p:dialog header="Car Detail" widgetVar="carDialog" resizable="false"
+			<p:dialog header="Детально" widgetVar="carDialog" resizable="false"
 				id="carDlg" showEffect="fade" hideEffect="explode" modal="true">
 
 				<h:panelGrid id="display" columns="2" cellpadding="4"
 					style="margin:0 auto;">
 
 					<f:facet name="header">  
-               Детали:
+					Запись имеет следующие атрибуты:
             </f:facet>
 
-					<h:outputText value="id:" />
+					<h:outputText value="№:" />
 					<h:panelGroup>
 						<h:outputText value="#{sectionControl.selected.id}"
 							style="font-weight:bold" />

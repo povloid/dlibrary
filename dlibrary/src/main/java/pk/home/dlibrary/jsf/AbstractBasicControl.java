@@ -293,7 +293,7 @@ public abstract class AbstractBasicControl<T extends Object> {
 				// page
 				if (page != null) { // Здесь уже подстройка запроса под page
 					System.out.println(">>>page 1 do page: " + page);
-					first = pageSize * page.intValue() - pageSize + 1;
+					first = pageSize * page.intValue() - pageSize;
 					first = first >= 0 ? first : 0;
 				}
 

@@ -51,10 +51,16 @@ public class SectionCintrol extends AbstractBasicControl<Section> implements
 	}
 	
 	
+	
+	@Override
+	protected Long aloadCount() throws Exception {
+		return sectionService.count();
+	}
+	
+	
 	@Override
 	protected List<Section> aload(LazyDataModel<Section> dataModel, int first, int pageSize, String sortField,
 			SortOrder sortOrder, Map<String, String> filters, SortOrderType sot) throws Exception {
-		dataModel.setRowCount((int) sectionService.count());
 		
 		SingularAttribute<Section, ?> orderByAttribute = Section_.id;
 		if(sortField != null && sortField.equals("keyName")){
@@ -100,6 +106,8 @@ public class SectionCintrol extends AbstractBasicControl<Section> implements
 		sectionService.remove(edited);
 		return this.retUrl;
 	}
+
+	
 
 	
 

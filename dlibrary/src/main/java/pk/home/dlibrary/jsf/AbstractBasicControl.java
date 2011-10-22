@@ -290,6 +290,14 @@ public abstract class AbstractBasicControl<T extends Object> {
 
 				sortField = csortField2;
 
+				
+				// set size
+				int size = aloadCount().intValue();
+				dataModel.setRowCount(size);
+				page = size < pageSize ? 1 : page; // Коррекция при убывании
+				
+				
+				
 				// page
 				if (page != null) { // Здесь уже подстройка запроса под page
 					System.out.println(">>>page 1 do page: " + page);
@@ -304,6 +312,7 @@ public abstract class AbstractBasicControl<T extends Object> {
 				// set size
 				if (l.size() > 0)
 					selected = l.get(0);
+				
 
 				return l;
 			} catch (Exception e) {
@@ -316,6 +325,9 @@ public abstract class AbstractBasicControl<T extends Object> {
 			return null;
 		}
 	};
+	
+	
+	protected abstract Long aloadCount() throws Exception;
 
 	protected abstract List<T> aload(LazyDataModel<T> dataModel, int first,
 			int pageSize, String sortField, SortOrder sortOrder,

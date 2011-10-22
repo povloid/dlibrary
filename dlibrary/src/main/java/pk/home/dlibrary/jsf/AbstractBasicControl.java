@@ -210,11 +210,11 @@ public abstract class AbstractBasicControl<T extends Object> {
 	}
 
 	public void setCsortOrder2(String csortOrder2) {
-//		if (csortOrder2 == null){
-//			csortOrder2 = "asc";
-//		} else if (csortOrder2.equals("ascdesc")) {
-//			csortOrder2 = this.csortOrder2.equals("asc")  ? "desc" : "asc";
-//		}
+		// if (csortOrder2 == null){
+		// csortOrder2 = "asc";
+		// } else if (csortOrder2.equals("ascdesc")) {
+		// csortOrder2 = this.csortOrder2.equals("asc") ? "desc" : "asc";
+		// }
 
 		this.csortOrder2 = csortOrder2;
 	}
@@ -290,16 +290,16 @@ public abstract class AbstractBasicControl<T extends Object> {
 
 				sortField = csortField2;
 
-				
 				// set size
 				int size = aloadCount().intValue();
 				dataModel.setRowCount(size);
-				page = size < pageSize ? 1 : page; // Коррекция при убывании
 				
-				
+				if(size < pageSize)
+					page = 1; // Коррекция при убывании
 				
 				// page
 				if (page != null) { // Здесь уже подстройка запроса под page
+
 					System.out.println(">>>page 1 do page: " + page);
 					first = pageSize * page.intValue() - pageSize;
 					first = first >= 0 ? first : 0;
@@ -312,7 +312,6 @@ public abstract class AbstractBasicControl<T extends Object> {
 				// set size
 				if (l.size() > 0)
 					selected = l.get(0);
-				
 
 				return l;
 			} catch (Exception e) {
@@ -325,8 +324,7 @@ public abstract class AbstractBasicControl<T extends Object> {
 			return null;
 		}
 	};
-	
-	
+
 	protected abstract Long aloadCount() throws Exception;
 
 	protected abstract List<T> aload(LazyDataModel<T> dataModel, int first,

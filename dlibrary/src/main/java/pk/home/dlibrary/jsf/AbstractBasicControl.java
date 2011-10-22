@@ -2,11 +2,8 @@ package pk.home.dlibrary.jsf;
 
 import java.util.List;
 import java.util.Map;
-
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
-
-import org.primefaces.component.datatable.DataTable;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
 
@@ -21,7 +18,6 @@ import pk.home.dlibrary.dao.AbstractBasicDAO.SortOrderType;
  */
 public abstract class AbstractBasicControl<T extends Object> {
 
-	
 	/**
 	 * Control mode enum
 	 * 
@@ -145,11 +141,11 @@ public abstract class AbstractBasicControl<T extends Object> {
 	 * @param retUrl
 	 */
 	public void setRetUrl(String retUrl) {
-		//this.retUrl = retUrl + "?faces-redirect=true&page=" + page;
+		// this.retUrl = retUrl + "?faces-redirect=true&page=" + page;
 		System.out.println(">>>retUrl: " + retUrl);
 		this.retUrl = retUrl;
 	}
-	
+
 	/**
 	 * Action Cancel and return
 	 * 
@@ -187,12 +183,63 @@ public abstract class AbstractBasicControl<T extends Object> {
 	// LIST
 	// ------------------------------------------------------------------------
 
+	private Integer rows = 10;
+
+	public Integer getRows() {
+		return rows;
+	}
+
+	public void setRows(Integer rows) {
+		this.rows = rows;
+	}
+
+	private String csortOrder;
+	private String csortOrder2;
+
+	public String getCsortOrder() {
+		return csortOrder;
+	}
+
+	public void setCsortOrder(String csortOrder) {
+		System.out.println(">>>csortOrder: " + csortOrder);
+		this.csortOrder = csortOrder;
+	}
+
+	public String getCsortOrder2() {
+		return csortOrder2;
+	}
+
+	public void setCsortOrder2(String csortOrder2) {
+//		if (csortOrder2 == null){
+//			csortOrder2 = "asc";
+//		} else if (csortOrder2.equals("ascdesc")) {
+//			csortOrder2 = this.csortOrder2.equals("asc")  ? "desc" : "asc";
+//		}
+
+		this.csortOrder2 = csortOrder2;
+	}
+
 	private String csortField;
+	private String csortField2;
+
+	public String getCsortField() {
+		return csortField;
+	}
+
+	public void setCsortField(String csortField) {
+		System.out.println(">>>csortField: " + csortField);
+		this.csortField = csortField;
+	}
+
+	public String getCsortField2() {
+		return csortField2;
+	}
+
+	public void setCsortField2(String csortField2) {
+		this.csortField2 = csortField2;
+	}
 
 	private Integer page;
-	
-	
-	
 
 	public Integer getPage() {
 		return page;
@@ -219,29 +266,45 @@ public abstract class AbstractBasicControl<T extends Object> {
 						+ ", sortField=" + sortField + ", sortOrder="
 						+ sortOrder + ", filters=" + filters);
 
+				// sort order type
 				SortOrderType sot = SortOrderType.ASC;
-				if(sortOrder == SortOrder.DESCENDING){
+
+				if (csortOrder != null) {
+					csortOrder2 = csortOrder;
+				}
+
+				if (csortOrder2 != null && csortOrder2.equals("asc")) {
+					sot = SortOrderType.ASC;
+
+				} else if (csortOrder2 != null && csortOrder2.equals("desc")) {
+					sot = SortOrderType.DESC;
+
+				} else if (sortOrder == SortOrder.DESCENDING) {
 					sot = SortOrderType.DESC;
 				}
-				
-				csortField = sortField;
-				
-				
-				if(page != null){
+
+				// sort field
+				if (csortField != null) {
+					csortField2 = csortField;
+				}
+
+				sortField = csortField2;
+
+				// page
+				if (page != null) { // Здесь уже подстройка запроса под page
 					System.out.println(">>>page 1 do page: " + page);
 					first = pageSize * page.intValue() - pageSize + 1;
-					first = first >= 0 ? first: 0; 
-				} 
-				
-				
-				
-				List<T> l =  aload(this, first, pageSize, sortField, sortOrder,
+					first = first >= 0 ? first : 0;
+				}
+
+				// call child loading impl
+				List<T> l = aload(this, first, pageSize, sortField, sortOrder,
 						filters, sot);
-				
-				if(l.size() > 0)
+
+				// set size
+				if (l.size() > 0)
 					selected = l.get(0);
-					
-				
+
 				return l;
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -286,14 +349,12 @@ public abstract class AbstractBasicControl<T extends Object> {
 	// ADD
 	// -------------------------------------------------------------------------
 
-
 	public String add(String retUrl) {
 		System.out.println(">>>action>retUrl: " + retUrl);
 		this.retUrl = retUrl;
 		return add();
 	}
-	
-	
+
 	/**
 	 * Action Add new bean
 	 * 

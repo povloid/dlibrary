@@ -70,6 +70,10 @@
 		!important;
 }
 
+.ref16 {
+	background-image: url(#{request.contextPath}/images/icons/ref_16.png)
+		!important;
+}
 
 .ui-datatable .ui-datatable-footer {
 	text-align: left;
@@ -161,9 +165,16 @@
 															</div>
 														</td>
 														<td valign="middle"><h:form>
+																<p:commandButton title="Обновить содержимое"
+																	image="ui-icon ref16" ajax="false" />
+															</h:form></td>
+														<td valign="middle"><h:form>
+
+
 																<p:commandButton value="?"
 																	onclick="contentPanelHelp.show();" />
-																<p:confirmDialog message="Это область рабочего пространства" width="200"
+																<p:confirmDialog
+																	message="Это область рабочего пространства" width="200"
 																	showEffect="explode" hideEffect="explode"
 																	header="Справка..." severity="info"
 																	widgetVar="contentPanelHelp">
@@ -173,8 +184,7 @@
 																		onclick="contentPanelHelp.hide()" type="button" />
 
 																</p:confirmDialog>
-															</h:form>
-															</td>
+															</h:form></td>
 													</tr>
 												</tbody>
 											</table>

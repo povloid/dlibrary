@@ -23,13 +23,13 @@
 	<ui:define name="content">
 
 		<f:metadata>
-			<f:event type="preRenderView" listener="#{sectionControl.init}" />
-			<!--  f:event type="postAddToView" listener="#{sectionControl.update}" / -->
-			<!--  f:event type="javax.faces.event.PostRestoreStateEvent" listener="#{sectionControl.update}" / -->
-			<f:viewParam name="page" value="#{sectionControl.page}" />
-			<f:viewParam name="csortField" value="#{sectionControl.csortField}" />
-			<f:viewParam name="csortOrder" value="#{sectionControl.csortOrder}" />
-			<f:viewParam name="retUrl" value="#{sectionControl.retUrl}" />
+			<f:event type="preRenderView" listener="#{genreControl.init}" />
+			<!--  f:event type="postAddToView" listener="#{genreControl.update}" / -->
+			<!--  f:event type="javax.faces.event.PostRestoreStateEvent" listener="#{genreControl.update}" / -->
+			<f:viewParam name="page" value="#{genreControl.page}" />
+			<f:viewParam name="csortField" value="#{genreControl.csortField}" />
+			<f:viewParam name="csortOrder" value="#{genreControl.csortOrder}" />
+			<f:viewParam name="retUrl" value="#{genreControl.retUrl}" />
 		</f:metadata>
 
 		<h:form id="form">
@@ -37,15 +37,15 @@
 			<p:growl id="msgs" showDetail="true" />
 
 			<p:commandButton ajax="false" image="ui-icon add" title="Добавить"
-				id="addButton" action="#{sectionControl.add()}">
+				id="addButton" action="#{genreControl.add()}">
 				<f:param id="addButtonP1" name="retUrl"
-					value="/jsf/section/sectionList.xhtml?faces-redirect=true&amp;page=#{sectionControl.page}" />
+					value="/jsf/genre/genreList.xhtml?faces-redirect=true&amp;page=#{genreControl.page}" />
 			</p:commandButton>
 
 
-			<p:dataTable id="table1" var="row" page="#{sectionControl.page}"
-				value="#{sectionControl.dataModel}" paginator="true"
-				rows="#{sectionControl.rows}" lazy="true" widgetVar="dataTable1"
+			<p:dataTable id="table1" var="row" page="#{genreControl.page}"
+				value="#{genreControl.dataModel}" paginator="true"
+				rows="#{genreControl.rows}" lazy="true" widgetVar="dataTable1"
 				paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
 				rowsPerPageTemplate="5,10,15,20,30,50,100"
 				emptyMessage="Таблица пустая">
@@ -67,14 +67,14 @@
 					<f:facet name="header">
 						<p:commandLink update="table1 image1 image2">
 							<h:graphicImage id="image1" value="/images/icons/up_16.png"
-								rendered="#{sectionControl.csortField2 == 'id' and sectionControl.csortOrder2 == 'desc'}" />
+								rendered="#{genreControl.csortField2 == 'id' and genreControl.csortOrder2 == 'desc'}" />
 							<h:graphicImage id="image2" value="/images/icons/down_16.png"
-								rendered="#{sectionControl.csortField2 == 'id' and sectionControl.csortOrder2 == 'asc' }" />
+								rendered="#{genreControl.csortField2 == 'id' and genreControl.csortOrder2 == 'asc' }" />
 							<f:setPropertyActionListener value="id"
-								target="#{sectionControl.csortField2}" />
+								target="#{genreControl.csortField2}" />
 							<f:setPropertyActionListener
-								value="#{sectionControl.csortOrder2 == 'desc' ? 'asc' : 'desc' }"
-								target="#{sectionControl.csortOrder2}" />
+								value="#{genreControl.csortOrder2 == 'desc' ? 'asc' : 'desc' }"
+								target="#{genreControl.csortOrder2}" />
 							<h:outputText value="№" />
 						</p:commandLink>
 					</f:facet>
@@ -85,15 +85,15 @@
 					<f:facet name="header">
 						<p:commandLink update="table1 image3 image4">
 							<h:graphicImage id="image3" value="/images/icons/up_16.png"
-								rendered="#{sectionControl.csortField2 == 'keyName' and sectionControl.csortOrder2 == 'desc'}" />
+								rendered="#{genreControl.csortField2 == 'keyName' and genreControl.csortOrder2 == 'desc'}" />
 							<h:graphicImage id="image4" value="/images/icons/down_16.png"
-								rendered="#{sectionControl.csortField2 == 'keyName' and sectionControl.csortOrder2 == 'asc'}" />
+								rendered="#{genreControl.csortField2 == 'keyName' and genreControl.csortOrder2 == 'asc'}" />
 							<h:outputText value="Наименование" />
 							<f:setPropertyActionListener value="keyName"
-								target="#{sectionControl.csortField2}" />
+								target="#{genreControl.csortField2}" />
 							<f:setPropertyActionListener
-								value="#{sectionControl.csortOrder2 == 'desc' ? 'asc' : 'desc' }"
-								target="#{sectionControl.csortOrder2}" />
+								value="#{genreControl.csortOrder2 == 'desc' ? 'asc' : 'desc' }"
+								target="#{genreControl.csortOrder2}" />
 						</p:commandLink>
 					</f:facet>
 					<h:outputText value="#{row.keyName}" />
@@ -108,25 +108,25 @@
 						oncomplete="carDialog.show()" image="ui-icon ui-icon-search"
 						title="Просмотр">
 						<f:setPropertyActionListener value="#{'VIEW'}"
-							target="#{sectionControl.mode}" />
+							target="#{genreControl.mode}" />
 						<f:setPropertyActionListener value="#{row}"
-							target="#{sectionControl.selected}" />
+							target="#{genreControl.selected}" />
 					</p:commandButton>
 					<p:commandButton update=":form:display" ajax="false"
-						image="ui-icon edit" action="#{sectionControl.edit()}"
+						image="ui-icon edit" action="#{genreControl.edit()}"
 						title="Редактировать">
 						<f:param name="retUrl"
-							value="/jsf/section/sectionList.xhtml?faces-redirect=true&amp;page=#{sectionControl.page}" />
+							value="/jsf/genre/genreList.xhtml?faces-redirect=true&amp;page=#{genreControl.page}" />
 						<f:setPropertyActionListener value="#{row}"
-							target="#{sectionControl.selected}" />
+							target="#{genreControl.selected}" />
 					</p:commandButton>
 					<p:commandButton update=":form:display" ajax="false"
-						image="ui-icon del" action="#{sectionControl.del()}"
+						image="ui-icon del" action="#{genreControl.del()}"
 						title="Удалить">
 						<f:param name="retUrl"
-							value="/jsf/section/sectionList.xhtml?faces-redirect=true&amp;page=#{sectionControl.page}" />
+							value="/jsf/genre/genreList.xhtml?faces-redirect=true&amp;page=#{genreControl.page}" />
 						<f:setPropertyActionListener value="#{row}"
-							target="#{sectionControl.selected}" />
+							target="#{genreControl.selected}" />
 					</p:commandButton>
 				</p:column>
 
@@ -146,21 +146,21 @@
 
 					<h:outputText value="№:" />
 					<h:panelGroup>
-						<h:outputText value="#{sectionControl.selected.id}"
+						<h:outputText value="#{genreControl.selected.id}"
 							style="font-weight:bold" />
 
 					</h:panelGroup>
 
 					<h:outputText value="Наименование:" />
 					<h:panelGroup>
-						<h:outputText value="#{sectionControl.selected.keyName}"
+						<h:outputText value="#{genreControl.selected.keyName}"
 							style="font-weight:bold" />
 
 					</h:panelGroup>
 
 					<h:outputText value="Описание:" />
 					<h:panelGroup>
-						<h:outputText value="#{sectionControl.selected.description}"
+						<h:outputText value="#{genreControl.selected.description}"
 							style="font-weight:bold; width: 300px" />
 
 					</h:panelGroup>

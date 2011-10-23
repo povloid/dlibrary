@@ -4,21 +4,16 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
-import javax.faces.component.UIComponent;
 import javax.persistence.metamodel.SingularAttribute;
-
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
-
 import pk.home.dlibrary.dao.AbstractBasicDAO.SortOrderType;
-import pk.home.dlibrary.domain.Section;
-import pk.home.dlibrary.domain.Section_;
-import pk.home.dlibrary.service.SectionService;
+import pk.home.dlibrary.domain.Genre;
+import pk.home.dlibrary.domain.Genre_;
+import pk.home.dlibrary.service.GenreService;
 
 /**
  * 
@@ -26,8 +21,8 @@ import pk.home.dlibrary.service.SectionService;
  */
 
 @Scope("session")
-@Component("sectionControl")
-public class SectionCintrol extends AbstractBasicControl<Section> implements
+@Component("genreControl")
+public class GenreControl extends AbstractBasicControl<Genre> implements
 		Serializable {
 
 	
@@ -35,10 +30,10 @@ public class SectionCintrol extends AbstractBasicControl<Section> implements
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -1481201000229334506L;
+	private static final long serialVersionUID = -1481201000229334507L;
 
 	@Autowired
-	private SectionService sectionService;
+	private GenreService genreService;
 
 	@Override
 	public void aInit() throws Exception {
@@ -54,56 +49,56 @@ public class SectionCintrol extends AbstractBasicControl<Section> implements
 	
 	@Override
 	protected Long aloadCount() throws Exception {
-		return sectionService.count();
+		return genreService.count();
 	}
 	
 	
 	@Override
-	protected List<Section> aload(LazyDataModel<Section> dataModel, int first, int pageSize, String sortField,
+	protected List<Genre> aload(LazyDataModel<Genre> dataModel, int first, int pageSize, String sortField,
 			SortOrder sortOrder, Map<String, String> filters, SortOrderType sot) throws Exception {
 		
-		SingularAttribute<Section, ?> orderByAttribute = Section_.id;
+		SingularAttribute<Genre, ?> orderByAttribute = Genre_.id;
 		if(sortField != null && sortField.equals("keyName")){
-			orderByAttribute = Section_.keyName;
+			orderByAttribute = Genre_.keyName;
 		}
 		
-		return sectionService.getAllEntities(pageSize,first, orderByAttribute, sot);
+		return genreService.getAllEntities(pageSize,first, orderByAttribute, sot);
 	}
 	
 
 	@Override
 	protected String aAdd() throws Exception {
-		this.edited = new Section();
-		return "/jsf/section/sectionOp.xhtml";
+		this.edited = new Genre();
+		return "/jsf/genre/genreOp.xhtml";
 	}
 
 	@Override
 	protected String acAdd() throws Exception {
-		sectionService.persist(edited);
+		genreService.persist(edited);
 		return this.retUrl;
 	}
 
 	@Override
 	protected String aEdit() throws Exception {
-		this.edited = sectionService.find(selected.getId());
-		return "/jsf/section/sectionOp.xhtml";
+		this.edited = genreService.find(selected.getId());
+		return "/jsf/genre/genreOp.xhtml";
 	}
 
 	@Override
 	protected String acEdit() throws Exception {
-		sectionService.merge(edited);
+		genreService.merge(edited);
 		return this.retUrl;
 	}
 
 	@Override
 	protected String aDel() throws Exception {
-		this.edited = sectionService.find(selected.getId());
-		return "/jsf/section/sectionOp.xhtml";
+		this.edited = genreService.find(selected.getId());
+		return "/jsf/genre/genreOp.xhtml";
 	}
 
 	@Override
 	protected String acDel() throws Exception {
-		sectionService.remove(edited);
+		genreService.remove(edited);
 		return this.retUrl;
 	}
 

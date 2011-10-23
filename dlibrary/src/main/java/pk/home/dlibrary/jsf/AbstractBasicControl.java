@@ -313,6 +313,9 @@ public abstract class AbstractBasicControl<T extends Object> {
 				if (l.size() > 0)
 					selected = l.get(0);
 
+				// selected fix
+				selected = null;
+				
 				return l;
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -360,6 +363,9 @@ public abstract class AbstractBasicControl<T extends Object> {
 	// -------------------------------------------------------------------------
 
 	public String add(String retUrl) {
+		// selected fix
+		selected = null;
+		
 		System.out.println(">>>action>retUrl: " + retUrl);
 		this.retUrl = retUrl;
 		return add();

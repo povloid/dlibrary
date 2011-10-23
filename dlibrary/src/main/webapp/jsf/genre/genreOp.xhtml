@@ -22,16 +22,16 @@
 
 	<ui:define name="content">
 		<f:metadata>
-<!-- 			<f:event type="preRenderView" listener="#{sectionControl.init}" /> -->
+<!-- 			<f:event type="preRenderView" listener="#{genreControl.init}" /> -->
 			
-			<f:viewParam name="retUrl" value="#{sectionControl.retUrl}" />
+			<f:viewParam name="retUrl" value="#{genreControl.retUrl}" />
 		</f:metadata>
 	
 
 		<h:form>
 			<p:commandButton ajax="false" immediate="true" image="ui-icon cancl"
 				style="margin-right:20px;" value="Назад"
-				action="#{sectionControl.cancel()}" />
+				action="#{genreControl.cancel()}" />
 
 			<p:panel header="Детали:"
 				style="margin-top:10px">
@@ -39,31 +39,31 @@
 				
 				<h:panelGrid id="detail" columns="2" styleClass="grid">
 
-					<h:outputText value="№:" rendered="#{sectionControl.edit || sectionControl.del}" />
+					<h:outputText value="№:" rendered="#{genreControl.edit || genreControl.del}" />
 
-					<h:outputText value="#{sectionControl.edited.id}"
-						rendered="#{sectionControl.edit || sectionControl.del}" />
+					<h:outputText value="#{genreControl.edited.id}"
+						rendered="#{genreControl.edit || genreControl.del}" />
 
 					<h:outputLabel value="KeyName:" />
-					<p:inputText value="#{sectionControl.edited.keyName}"
-						readonly="#{sectionControl.del}" title="KeyName"
+					<p:inputText value="#{genreControl.edited.keyName}"
+						readonly="#{genreControl.del}" title="KeyName"
 						required="true" requiredMessage="The KeyName field is required." />
 
 					<h:outputLabel value="Description:" />
-					<p:inputTextarea value="#{sectionControl.edited.description}"
+					<p:inputTextarea value="#{genreControl.edited.description}"
 						style="width:300px;height:100px;"
-						readonly="#{sectionControl.del}" title="Description" />
+						readonly="#{genreControl.del}" title="Description" />
 
 					<h:panelGroup>
-						<p:commandButton rendered="#{sectionControl.add}"
+						<p:commandButton rendered="#{genreControl.add}"
 							ajax="false" image="ui-icon add" style="margin-right:20px;"
-							value="Создать" action="#{sectionControl.cAdd()}" />
-						<p:commandButton rendered="#{sectionControl.edit}"
+							value="Создать" action="#{genreControl.cAdd()}" />
+						<p:commandButton rendered="#{genreControl.edit}"
 							ajax="false" image="ui-icon edit" style="margin-right:20px;"
-							value="Обновить" action="#{sectionControl.cEdit()}" />
-						<p:commandButton rendered="#{sectionControl.del}"
+							value="Обновить" action="#{genreControl.cEdit()}" />
+						<p:commandButton rendered="#{genreControl.del}"
 							ajax="false" image="ui-icon del" style="margin-right:20px;"
-							value="Удалить" action="#{sectionControl.cDel()}" />
+							value="Удалить" action="#{genreControl.cDel()}" />
 					</h:panelGroup>
 				</h:panelGrid>
 			</p:panel>

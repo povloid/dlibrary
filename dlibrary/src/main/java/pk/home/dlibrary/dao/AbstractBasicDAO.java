@@ -8,11 +8,8 @@ import javax.persistence.criteria.Root;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
-
-import org.apache.lucene.analysis.ReusableAnalyzerBase;
 import org.springframework.transaction.annotation.Transactional;
 
-import pk.home.dlibrary.domain.Section_;
 
 public abstract class AbstractBasicDAO<T extends Object> {
 

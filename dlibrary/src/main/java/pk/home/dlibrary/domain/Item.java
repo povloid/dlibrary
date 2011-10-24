@@ -32,12 +32,13 @@ public class Item implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
+	
 	@ManyToOne
-	@JoinColumn(referencedColumnName = "id")
+	@JoinColumn(nullable=false)
 	private BookOrder bookOrder;
 
 	@ManyToOne
-	@JoinColumn(referencedColumnName = "id")
+	@JoinColumn(nullable=false)
 	private Book book;
 
 	@Temporal(TemporalType.DATE)

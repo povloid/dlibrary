@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.Length;
 
@@ -43,6 +44,8 @@ public class BookOrder implements Serializable {
 	@JoinColumn(referencedColumnName = "id")
 	private Disciple disciple;
 
+	@Column(nullable = false)
+	@NotNull
 	private boolean closed;
 
 	@OneToMany(mappedBy = "bookOrder", cascade = CascadeType.ALL, fetch = FetchType.LAZY)

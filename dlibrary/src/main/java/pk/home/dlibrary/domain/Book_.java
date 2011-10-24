@@ -1,6 +1,5 @@
 package pk.home.dlibrary.domain;
 
-import java.util.Date;
 import javax.annotation.Generated;
 import javax.persistence.metamodel.ListAttribute;
 import javax.persistence.metamodel.SingularAttribute;
@@ -14,8 +13,8 @@ public class Book_ {
 	public static volatile SingularAttribute<Book, String> description;
 	public static volatile SingularAttribute<Book, String> author;
 	public static volatile SingularAttribute<Book, String> publishingHouse;
-	public static volatile SingularAttribute<Book, Date> cdate;
+	public static volatile SingularAttribute<Book, Integer> cyear;
 	public static volatile ListAttribute<Book, Genre> genres;
 	public static volatile SingularAttribute<Book, Section> section;
-	public static volatile SingularAttribute<Book, Boolean> removed;
+	public static volatile SingularAttribute<Book, Boolean> blocked;
 }

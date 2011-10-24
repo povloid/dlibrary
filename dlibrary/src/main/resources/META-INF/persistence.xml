@@ -8,6 +8,8 @@
 		<class>pk.home.dlibrary.domain.Disciple</class>
 		<class>pk.home.dlibrary.domain.Genre</class>
 		<class>pk.home.dlibrary.domain.Section</class>
+		<class>pk.home.dlibrary.domain.BookOrder</class>
+		<class>pk.home.dlibrary.domain.Item</class>
 		<properties>
 
 			<!-- PostgreSQL -->

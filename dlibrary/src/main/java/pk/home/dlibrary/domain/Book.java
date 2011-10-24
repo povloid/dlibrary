@@ -32,7 +32,7 @@ public class Book implements Serializable {
 	private Long id;
 
 	@NotNull
-	@Column(unique = true, nullable = false)
+	@Column(nullable = false)
 	private String Title;
 
 	@Length(max = 500)

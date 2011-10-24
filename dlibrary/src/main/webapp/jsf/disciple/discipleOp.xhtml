@@ -1,0 +1,93 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.prime.com.tr/ui">
+
+<ui:composition template="/WEB-INF/templites/templite.xhtml">
+	<ui:define name="title">
+        Читатели
+    </ui:define>
+
+	<ui:define name="header_icon">
+		<img src="#{request.contextPath}/images/icons/addbk_24.png"></img>
+	</ui:define>
+
+	<ui:define name="header">
+        Читатели
+    </ui:define>
+
+	<ui:define name="content">
+		<f:metadata>
+			<!-- 			<f:event type="preRenderView" listener="#{discipleControl.init}" /> -->
+
+			<f:viewParam name="retUrl" value="#{discipleControl.retUrl}" />
+		</f:metadata>
+
+
+		<h:form>
+			<p:commandButton ajax="false" immediate="true" image="ui-icon cancl"
+				style="margin-right:20px;" value="Назад"
+				action="#{discipleControl.cancel()}" />
+
+			<p:panel header="Детали:" style="margin-top:10px">
+				<p:messages showDetail="true" autoUpdate="true" />
+
+				<h:panelGrid id="detail" columns="2" styleClass="grid">
+
+					<h:outputText value="№:"
+						rendered="#{discipleControl.edit || discipleControl.del}" />
+
+					<h:outputText value="#{discipleControl.edited.id}"
+						rendered="#{discipleControl.edit || discipleControl.del}" />
+
+					<h:outputLabel value="Фамилия:" />
+					<p:inputText value="#{discipleControl.edited.fname}"
+						readonly="#{discipleControl.del}" title="Фамилия читателя"
+						required="true" requiredMessage="The KeyName field is required." />
+
+					<h:outputLabel value="Имя:" />
+					<p:inputText value="#{discipleControl.edited.iname}"
+						readonly="#{discipleControl.del}" title="Имя читателя"
+						required="true" requiredMessage="The KeyName field is required." />
+
+					<h:outputLabel value="Отчество:" />
+					<p:inputText value="#{discipleControl.edited.lname}"
+						readonly="#{discipleControl.del}" title="Отчество читателя" />
+
+					<h:outputLabel value="Дата рождения:" />
+					<p:calendar showOn="button" pattern="dd.MM.yyyy" 
+						value="#{discipleControl.edited.wbdate}" validatorMessage="Формат даты задан неправильно"
+						readonly="#{discipleControl.del}" title="Дата рождения читателя (чч.мм.гггг)" />
+
+
+
+					<h:outputLabel value="Дополнительные сведения:" />
+					<p:inputTextarea value="#{discipleControl.edited.description}"
+						style="width:300px;height:100px;"
+						readonly="#{discipleControl.del}" title="Дополнительные сведения и заметки по читателю" />
+
+					<h:panelGroup>
+						<p:commandButton rendered="#{discipleControl.add}" ajax="false"
+							image="ui-icon add" style="margin-right:20px;" value="Создать"
+							action="#{discipleControl.cAdd()}" />
+						<p:commandButton rendered="#{discipleControl.edit}" ajax="false"
+							image="ui-icon edit" style="margin-right:20px;" value="Обновить"
+							action="#{discipleControl.cEdit()}" />
+						<p:commandButton rendered="#{discipleControl.del}" ajax="false"
+							image="ui-icon del" style="margin-right:20px;" value="Удалить"
+							action="#{discipleControl.cDel()}" />
+					</h:panelGroup>
+				</h:panelGrid>
+			</p:panel>
+		</h:form>
+
+	</ui:define>
+	<ui:define name="footer">
+
+	</ui:define>
+</ui:composition>
+</html>

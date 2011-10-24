@@ -255,13 +255,15 @@
 		<dependency>
 			<groupId>com.sun.faces</groupId>
 			<artifactId>jsf-api</artifactId>
-			<version>2.0.6</version>
+			<version>2.1.2</version>
 		</dependency>
 		<dependency>
 			<groupId>com.sun.faces</groupId>
 			<artifactId>jsf-impl</artifactId>
-			<version>2.0.6</version>
+			<version>2.1.2</version>
 		</dependency>
+		
+		
 		<!-- PrimeFaces component library -->
 		<dependency>
 			<groupId>org.primefaces</groupId>

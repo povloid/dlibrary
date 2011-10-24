@@ -9,7 +9,7 @@
 
 <ui:composition template="/WEB-INF/templites/templite.xhtml">
 	<ui:define name="title">
-        Читатели
+        Справочник книг
     </ui:define>
 
 	<ui:define name="header_icon">
@@ -17,19 +17,19 @@
 	</ui:define>
 
 	<ui:define name="header">
-        Читатели
+        Справочник книг
     </ui:define>
 
 	<ui:define name="content">
 
 		<f:metadata>
-			<f:event type="preRenderView" listener="#{discipleControl.init}" />
-			<!--  f:event type="postAddToView" listener="#{discipleControl.update}" / -->
-			<!--  f:event type="javax.faces.event.PostRestoreStateEvent" listener="#{discipleControl.update}" / -->
-			<f:viewParam name="page" value="#{discipleControl.page}" />
-			<f:viewParam name="csortField" value="#{discipleControl.csortField}" />
-			<f:viewParam name="csortOrder" value="#{discipleControl.csortOrder}" />
-			<f:viewParam name="retUrl" value="#{discipleControl.retUrl}" />
+			<f:event type="preRenderView" listener="#{bookControl.init}" />
+			<!--  f:event type="postAddToView" listener="#{bookControl.update}" / -->
+			<!--  f:event type="javax.faces.event.PostRestoreStateEvent" listener="#{bookControl.update}" / -->
+			<f:viewParam name="page" value="#{bookControl.page}" />
+			<f:viewParam name="csortField" value="#{bookControl.csortField}" />
+			<f:viewParam name="csortOrder" value="#{bookControl.csortOrder}" />
+			<f:viewParam name="retUrl" value="#{bookControl.retUrl}" />
 		</f:metadata>
 
 		<h:form id="form">
@@ -37,15 +37,15 @@
 			<p:growl id="msgs" showDetail="true" />
 
 			<p:commandButton ajax="false" image="ui-icon add" title="Добавить"
-				id="addButton" action="#{discipleControl.add()}">
+				id="addButton" action="#{bookControl.add()}">
 				<f:param id="addButtonP1" name="retUrl"
-					value="/jsf/disciple/discipleList.xhtml?faces-redirect=true&amp;page=#{discipleControl.page}" />
+					value="/jsf/book/bookList.xhtml?faces-redirect=true&amp;page=#{bookControl.page}" />
 			</p:commandButton>
 
 
-			<p:dataTable id="table1" var="row" page="#{discipleControl.page}"
-				value="#{discipleControl.dataModel}" paginator="true"
-				rows="#{discipleControl.rows}" lazy="true" widgetVar="dataTable1"
+			<p:dataTable id="table1" var="row" page="#{bookControl.page}"
+				value="#{bookControl.dataModel}" paginator="true"
+				rows="#{bookControl.rows}" lazy="true" widgetVar="dataTable1"
 				paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
 				rowsPerPageTemplate="5,10,15,20,30,50,100"
 				emptyMessage="Таблица пустая">
@@ -62,18 +62,37 @@
 				 Список
 			    </f:facet>
 
+
+				<p:column>
+					<f:facet name="header">
+						<p:commandLink update="table1 image11 image22">
+							<h:graphicImage id="image11" value="/images/icons/up_16.png"
+								rendered="#{bookControl.csortField2 == 'section' and bookControl.csortOrder2 == 'desc'}" />
+							<h:graphicImage id="image22" value="/images/icons/down_16.png"
+								rendered="#{bookControl.csortField2 == 'section' and bookControl.csortOrder2 == 'asc' }" />
+							<f:setPropertyActionListener value="section"
+								target="#{bookControl.csortField2}" />
+							<f:setPropertyActionListener
+								value="#{bookControl.csortOrder2 == 'desc' ? 'asc' : 'desc' }"
+								target="#{bookControl.csortOrder2}" />
+							<h:outputText value="Секция" />
+						</p:commandLink>
+					</f:facet>
+					<h:outputText value="#{row.section.keyName}" />
+				</p:column>
+
 				<p:column>
 					<f:facet name="header">
 						<p:commandLink update="table1 image1 image2">
 							<h:graphicImage id="image1" value="/images/icons/up_16.png"
-								rendered="#{discipleControl.csortField2 == 'id' and discipleControl.csortOrder2 == 'desc'}" />
+								rendered="#{bookControl.csortField2 == 'id' and bookControl.csortOrder2 == 'desc'}" />
 							<h:graphicImage id="image2" value="/images/icons/down_16.png"
-								rendered="#{discipleControl.csortField2 == 'id' and discipleControl.csortOrder2 == 'asc' }" />
+								rendered="#{bookControl.csortField2 == 'id' and bookControl.csortOrder2 == 'asc' }" />
 							<f:setPropertyActionListener value="id"
-								target="#{discipleControl.csortField2}" />
+								target="#{bookControl.csortField2}" />
 							<f:setPropertyActionListener
-								value="#{discipleControl.csortOrder2 == 'desc' ? 'asc' : 'desc' }"
-								target="#{discipleControl.csortOrder2}" />
+								value="#{bookControl.csortOrder2 == 'desc' ? 'asc' : 'desc' }"
+								target="#{bookControl.csortOrder2}" />
 							<h:outputText value="№" />
 						</p:commandLink>
 					</f:facet>
@@ -84,44 +103,21 @@
 					<f:facet name="header">
 						<p:commandLink update="table1 image3 image4">
 							<h:graphicImage id="image3" value="/images/icons/up_16.png"
-								rendered="#{discipleControl.csortField2 == 'fname' and discipleControl.csortOrder2 == 'desc'}" />
+								rendered="#{bookControl.csortField2 == 'title' and bookControl.csortOrder2 == 'desc'}" />
 							<h:graphicImage id="image4" value="/images/icons/down_16.png"
-								rendered="#{discipleControl.csortField2 == 'fname' and discipleControl.csortOrder2 == 'asc'}" />
-							<h:outputText value="Фамилия" />
-							<f:setPropertyActionListener value="fname"
-								target="#{discipleControl.csortField2}" />
+								rendered="#{bookControl.csortField2 == 'title' and bookControl.csortOrder2 == 'asc'}" />
+							<h:outputText value="Название" />
+							<f:setPropertyActionListener value="title"
+								target="#{bookControl.csortField2}" />
 							<f:setPropertyActionListener
-								value="#{discipleControl.csortOrder2 == 'desc' ? 'asc' : 'desc' }"
-								target="#{discipleControl.csortOrder2}" />
+								value="#{bookControl.csortOrder2 == 'desc' ? 'asc' : 'desc' }"
+								target="#{bookControl.csortOrder2}" />
 						</p:commandLink>
 					</f:facet>
-					<h:outputText value="#{row.fname}" />
+					<h:outputText value="#{row.title}" />
 				</p:column>
 
-				<p:column>
-					<f:facet name="header">
-						<p:commandLink update="table1 image5 image6">
-							<h:graphicImage id="image5" value="/images/icons/up_16.png"
-								rendered="#{discipleControl.csortField2 == 'iname' and discipleControl.csortOrder2 == 'desc'}" />
-							<h:graphicImage id="image6" value="/images/icons/down_16.png"
-								rendered="#{discipleControl.csortField2 == 'iname' and discipleControl.csortOrder2 == 'asc'}" />
-							<h:outputText value="Имя" />
-							<f:setPropertyActionListener value="iname"
-								target="#{discipleControl.csortField2}" />
-							<f:setPropertyActionListener
-								value="#{discipleControl.csortOrder2 == 'desc' ? 'asc' : 'desc' }"
-								target="#{discipleControl.csortOrder2}" />
-						</p:commandLink>
-					</f:facet>
-					<h:outputText value="#{row.iname}" />
-				</p:column>
-
-
-				<p:column headerText="Отчество">
-					<h:outputText value="#{row.lname}" />
-				</p:column>
-
-				<p:column headerText="Прочая информация">
+				<p:column headerText="Описание">
 					<h:outputText value="#{row.description}" />
 				</p:column>
 
@@ -130,25 +126,24 @@
 						oncomplete="carDialog.show()" image="ui-icon ui-icon-search"
 						title="Просмотр">
 						<f:setPropertyActionListener value="#{'VIEW'}"
-							target="#{discipleControl.mode}" />
+							target="#{bookControl.mode}" />
 						<f:setPropertyActionListener value="#{row}"
-							target="#{discipleControl.selected}" />
+							target="#{bookControl.selected}" />
 					</p:commandButton>
 					<p:commandButton update=":form:display" ajax="false"
-						image="ui-icon edit" action="#{discipleControl.edit()}"
+						image="ui-icon edit" action="#{bookControl.edit()}"
 						title="Редактировать">
 						<f:param name="retUrl"
-							value="/jsf/disciple/discipleList.xhtml?faces-redirect=true&amp;page=#{discipleControl.page}" />
+							value="/jsf/book/bookList.xhtml?faces-redirect=true&amp;page=#{bookControl.page}" />
 						<f:setPropertyActionListener value="#{row}"
-							target="#{discipleControl.selected}" />
+							target="#{bookControl.selected}" />
 					</p:commandButton>
 					<p:commandButton update=":form:display" ajax="false"
-						image="ui-icon del" action="#{discipleControl.del()}"
-						title="Удалить">
+						image="ui-icon del" action="#{bookControl.del()}" title="Удалить">
 						<f:param name="retUrl"
-							value="/jsf/disciple/discipleList.xhtml?faces-redirect=true&amp;page=#{discipleControl.page}" />
+							value="/jsf/book/bookList.xhtml?faces-redirect=true&amp;page=#{bookControl.page}" />
 						<f:setPropertyActionListener value="#{row}"
-							target="#{discipleControl.selected}" />
+							target="#{bookControl.selected}" />
 					</p:commandButton>
 				</p:column>
 
@@ -164,52 +159,63 @@
 
 					<f:facet name="header">  
 					Запись имеет следующие атрибуты:
-            </f:facet>
+            		</f:facet>
 
 					<h:outputText value="№:" />
 					<h:panelGroup>
-						<h:outputText value="#{discipleControl.selected.id}"
+						<h:outputText value="#{bookControl.selected.id}"
 							style="font-weight:bold" />
 
 					</h:panelGroup>
 
-					<h:outputText value="Фамилия:" />
+					<h:outputText value="Секция:" />
 					<h:panelGroup>
-						<h:outputText value="#{discipleControl.selected.fname}"
+						<h:outputText value="#{bookControl.selected.section.keyName}"
+							style="font-weight:bold" />
+					</h:panelGroup>
+
+					<h:outputText value="Жанры:" />
+					<h:panelGroup>
+						<h:outputText value="#{bookControl.selected.genresText}"
+							style="font-weight:bold" />
+					</h:panelGroup>
+
+
+					<p:separator />
+					<p:separator />
+
+					<h:outputText value="Название:" />
+					<h:panelGroup>
+						<h:outputText value="#{bookControl.selected.title}"
 							style="font-weight:bold" />
 
 					</h:panelGroup>
 
-					<h:outputText value="Имя:" />
+					<h:outputLabel value="Автор:" />
 					<h:panelGroup>
-						<h:outputText value="#{discipleControl.selected.iname}"
-							style="font-weight:bold" />
-
+						<h:outputText value="#{bookControl.selected.author}"
+							style="font-weight:bold; width: 300px" />
 					</h:panelGroup>
 
-					<h:outputText value="Отчество:" />
-					<h:panelGroup>
-						<h:outputText value="#{discipleControl.selected.lname}"
-							style="font-weight:bold" />
 
+					<h:outputLabel value="Издательство:" />
+					<h:panelGroup>
+						<h:outputText value="#{bookControl.selected.publishingHouse}"
+							style="font-weight:bold; width: 300px" />
 					</h:panelGroup>
 
-					<h:outputText value="Дата рождения:" />
+					<h:outputLabel value="Год издания:" />
 					<h:panelGroup>
-
-						<h:outputText value="#{discipleControl.selected.wbdate}"
-							style="font-weight:bold" >
-							<f:convertDateTime  type="date"/>
-						</h:outputText>
-
+						<h:outputText value="#{bookControl.selected.cyear}"
+							style="font-weight:bold; width: 300px" />
 					</h:panelGroup>
 
-					<h:outputText value="Прочая информация:" />
+					<h:outputText value="Описание:" />
 					<h:panelGroup>
-						<h:outputText value="#{discipleControl.selected.description}"
-							style="font-weight:bold; maxwidth: 300px" />
-
+						<h:outputText value="#{bookControl.selected.description}"
+							style="font-weight:bold; width: 300px" />
 					</h:panelGroup>
+
 
 					<f:facet name="footer">
 						<p:outputPanel rendered="#{tableBean.editMode}" layout="block"

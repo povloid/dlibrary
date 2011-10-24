@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.lang.Long;
 import java.lang.String;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -48,8 +47,7 @@ public class Book implements Serializable {
 	@Column(length = 200)
 	private String publishingHouse;
 
-	@Temporal(TemporalType.DATE)
-	private Date cdate;
+	private Integer cyear;
 
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "book_genre", joinColumns = @JoinColumn(name = "book_id"), inverseJoinColumns = @JoinColumn(name = "genre_id"))
@@ -59,7 +57,7 @@ public class Book implements Serializable {
 	@JoinColumn(referencedColumnName = "id")
 	private Section section;
 
-	boolean removed;
+	boolean blocked;
 
 	public Book() {
 		super();
@@ -89,12 +87,12 @@ public class Book implements Serializable {
 		this.description = description;
 	}
 
-	public Date getCdate() {
-		return this.cdate;
+	public Integer getCyear() {
+		return cyear;
 	}
 
-	public void setCdate(Date cdate) {
-		this.cdate = cdate;
+	public void setCyear(Integer cyear) {
+		this.cyear = cyear;
 	}
 
 	public String getAuthor() {
@@ -129,12 +127,14 @@ public class Book implements Serializable {
 		this.section = section;
 	}
 
-	public boolean isRemoved() {
-		return removed;
+	
+
+	public boolean isBlocked() {
+		return blocked;
 	}
 
-	public void setRemoved(boolean removed) {
-		this.removed = removed;
+	public void setBlocked(boolean blocked) {
+		this.blocked = blocked;
 	}
 
 	@Override
@@ -161,6 +161,14 @@ public class Book implements Serializable {
 	@Override
 	public String toString() {
 		return "Book[ id=" + id + " ]";
+	}
+
+	public String getGenresText() {
+		String text = "";
+		for (Genre g : genres) {
+			text += g.getKeyName() + "; ";
+		}
+		return text;
 	}
 
 }

@@ -60,7 +60,9 @@ public class DiscipleControl extends AbstractBasicControl<Disciple> implements
 		SingularAttribute<Disciple, ?> orderByAttribute = Disciple_.id;
 		if(sortField != null && sortField.equals("fname")){
 			orderByAttribute = Disciple_.fname;
-		}
+		} else if(sortField != null && sortField.equals("iname")){
+			orderByAttribute = Disciple_.iname;
+		} 
 		
 		return discipleService.getAllEntities(pageSize,first, orderByAttribute, sot);
 	}

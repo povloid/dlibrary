@@ -24,9 +24,9 @@
 											<b>Навигация</b>
 										</div>
 									</td>
-									<td valign="middle">
-										<h:form>
-											<p:commandButton value="?" onclick="navigationPanelHelp.show();" />
+									<td valign="middle"><h:form>
+											<p:commandButton value="?"
+												onclick="navigationPanelHelp.show();" />
 											<p:confirmDialog
 												message="Это область содержащая меню навигации. При выборе соответствующего пункта будет производиться переключение содержимого рабочей области с права."
 												width="200" showEffect="explode" hideEffect="explode"
@@ -38,9 +38,7 @@
 													onclick="navigationPanelHelp.hide()" type="button" />
 
 											</p:confirmDialog>
-										</h:form>
-										
-									</td>
+										</h:form></td>
 								</tr>
 							</tbody>
 						</table>
@@ -55,6 +53,10 @@
 
 						<p:menuitem value="На главную" url="/" icon="ui-icon home" />
 						<!-- -->
+						<p:submenu label="Операции" icon="ui-icon addbk">
+							<p:menuitem value="Выдать книгу" icon="ui-icon addbk"
+								url="/faces/jsf/bookOrder/newBookOrder.xhtml" />
+						</p:submenu>
 
 						<!-- -->
 						<p:submenu label="Справочники ..." icon="ui-icon addbk">

@@ -71,10 +71,16 @@ public class BookControl extends AbstractBasicControl<Book> implements
 
 		SingularAttribute<Book, ?> orderByAttribute = Book_.id;
 		if (sortField != null && sortField.equals("title")) {
-			orderByAttribute = Book_.Title;
+			orderByAttribute = Book_.title;
 		} else if (sortField != null && sortField.equals("section")) {
 			orderByAttribute = Book_.section;
-		}
+		} else if (sortField != null && sortField.equals("blocked")) {
+			orderByAttribute = Book_.blocked;
+		} else if (sortField != null && sortField.equals("reads")) {
+			orderByAttribute = Book_.reads;
+		} else if (sortField != null && sortField.equals("bookNumber")) {
+			orderByAttribute = Book_.bookNumber;
+		} 
 
 		return bookService.getAllEntities(pageSize, first, orderByAttribute,
 				sot);

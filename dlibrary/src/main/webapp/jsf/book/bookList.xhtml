@@ -98,6 +98,25 @@
 					</f:facet>
 					<h:outputText value="#{row.id}" />
 				</p:column>
+				
+				<p:column>
+					<f:facet name="header">
+						<p:commandLink update="table1 image12 image13">
+							<h:graphicImage id="image12" value="/images/icons/up_16.png"
+								rendered="#{bookControl.csortField2 == 'bookNumber' and bookControl.csortOrder2 == 'desc'}" />
+							<h:graphicImage id="image23" value="/images/icons/down_16.png"
+								rendered="#{bookControl.csortField2 == 'bookNumber' and bookControl.csortOrder2 == 'asc' }" />
+							<f:setPropertyActionListener value="bookNumber"
+								target="#{bookControl.csortField2}" />
+							<f:setPropertyActionListener
+								value="#{bookControl.csortOrder2 == 'desc' ? 'asc' : 'desc' }"
+								target="#{bookControl.csortOrder2}" />
+							<h:outputText value="Код книги" />
+						</p:commandLink>
+					</f:facet>
+					<h:outputText value="#{row.bookNumber}" />
+				</p:column>
+				
 
 				<p:column>
 					<f:facet name="header">
@@ -120,6 +139,45 @@
 				<p:column headerText="Описание">
 					<h:outputText value="#{row.description}" />
 				</p:column>
+				
+				
+				<p:column>
+					<f:facet name="header">
+						<p:commandLink update="table1 image5 image6">
+							<h:graphicImage id="image5" value="/images/icons/up_16.png"
+								rendered="#{bookControl.csortField2 == 'reads' and bookControl.csortOrder2 == 'desc'}" />
+							<h:graphicImage id="image6" value="/images/icons/down_16.png"
+								rendered="#{bookControl.csortField2 == 'reads' and bookControl.csortOrder2 == 'asc'}" />
+							<h:outputText value="Выдана" />
+							<f:setPropertyActionListener value="reads"
+								target="#{bookControl.csortField2}" />
+							<f:setPropertyActionListener
+								value="#{bookControl.csortOrder2 == 'desc' ? 'asc' : 'desc' }"
+								target="#{bookControl.csortOrder2}" />
+						</p:commandLink>
+					</f:facet>
+					<h:outputText value="#{row.reads ? 'да':'нет'}" />
+				</p:column>
+				
+				<p:column>
+					<f:facet name="header">
+						<p:commandLink update="table1 image7 image8">
+							<h:graphicImage id="image7" value="/images/icons/up_16.png"
+								rendered="#{bookControl.csortField2 == 'blocked' and bookControl.csortOrder2 == 'desc'}" />
+							<h:graphicImage id="image8" value="/images/icons/down_16.png"
+								rendered="#{bookControl.csortField2 == 'blocked' and bookControl.csortOrder2 == 'asc'}" />
+							<h:outputText value="Блокирована" />
+							<f:setPropertyActionListener value="blocked"
+								target="#{bookControl.csortField2}" />
+							<f:setPropertyActionListener
+								value="#{bookControl.csortOrder2 == 'desc' ? 'asc' : 'desc' }"
+								target="#{bookControl.csortOrder2}" />
+						</p:commandLink>
+					</f:facet>
+					<h:outputText value="#{row.blocked ? 'да':'нет'}" />
+				</p:column>
+				
+				
 
 				<p:column style="width:100px !important" headerText="Действия">
 					<p:commandButton update=":form:display"
@@ -183,6 +241,28 @@
 
 					<p:separator />
 					<p:separator />
+					
+					<h:outputText value="Выдана:" />
+					<h:panelGroup>
+						<h:outputText value="#{bookControl.selected.reads ? 'да':'нет'}"
+							style="font-weight:bold" />
+					</h:panelGroup>
+					
+					
+					<h:outputText value="Блокирована:" />
+					<h:panelGroup>
+						<h:outputText value="#{bookControl.selected.blocked ? 'да':'нет'}"
+							style="font-weight:bold" />
+					</h:panelGroup>
+					
+					<p:separator />
+					<p:separator />
+
+					<h:outputText value="Код книги:" />
+					<h:panelGroup>
+						<h:outputText value="#{bookControl.selected.bookNumber}"
+							style="font-weight:bold" />
+					</h:panelGroup>
 
 					<h:outputText value="Название:" />
 					<h:panelGroup>

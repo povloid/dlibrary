@@ -21,4 +21,5 @@ public class DiscipleService extends AbstractBasicService<Disciple>{
 		return DiscipleDAO;
 	}
 	
+	
 }

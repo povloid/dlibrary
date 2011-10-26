@@ -1,0 +1,48 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.prime.com.tr/ui">
+
+<ui:composition template="/WEB-INF/templites/templite.xhtml">
+	<ui:define name="title">
+        Выдача книги
+    </ui:define>
+
+	<ui:define name="header_icon">
+		<img src="#{request.contextPath}/images/icons/addbk_24.png"></img>
+	</ui:define>
+
+	<ui:define name="header">
+        Выдача книги
+    </ui:define>
+
+	<ui:define name="content">
+
+		<f:metadata>
+			<!-- 			<f:event type="preRenderView" listener="#{bookControl.init}" /> -->
+			<!--  f:event type="postAddToView" listener="#{bookControl.update}" / -->
+			<!--  f:event type="javax.faces.event.PostRestoreStateEvent" listener="#{bookControl.update}" / -->
+			<!-- 			<f:viewParam name="page" value="#{bookControl.page}" /> -->
+			<!-- 			<f:viewParam name="csortField" value="#{bookControl.csortField}" /> -->
+			<!-- 			<f:viewParam name="csortOrder" value="#{bookControl.csortOrder}" /> -->
+			<!-- 			<f:viewParam name="retUrl" value="#{bookControl.retUrl}" /> -->
+		</f:metadata>
+
+		<h:form id="form">
+
+			<p:growl id="msgs" showDetail="true" />
+
+
+
+		</h:form>
+	</ui:define>
+
+	<ui:define name="footer">
+        footer
+    </ui:define>
+</ui:composition>
+</html>

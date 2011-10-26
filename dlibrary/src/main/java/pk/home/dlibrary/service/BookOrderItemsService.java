@@ -35,9 +35,17 @@ public class BookOrderItemsService extends AbstractBasicService<BookOrder>{
 	public BookOrder addNewBookOrder(BookOrder bookOrder) throws Exception{
 		if(bookOrder.getItems() == null || bookOrder.getItems().size() == 0)
 			throw new Exception("<<<ERROR: The items is empty.");
+		
 		return bookOrderDAO.persist(bookOrder);
 	}
 
+
+	
+	
+	
+	
+	
+	
 	
 
 	

@@ -9,6 +9,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotEmpty;
 
 /**
  * Entity implementation class for Entity: Book
@@ -33,7 +34,7 @@ public class Book implements Serializable {
 
 	@NotNull
 	@Column(nullable = false)
-	private String Title;
+	private String title;
 
 	@Length(max = 500)
 	@Column(length = 500)
@@ -57,7 +58,15 @@ public class Book implements Serializable {
 	@JoinColumn(referencedColumnName = "id")
 	private Section section;
 
-	boolean blocked;
+	@Length(max = 30)
+	@NotNull
+	@NotEmpty
+	@Column(length = 30, unique=true, nullable=false)
+	private String bookNumber;
+
+	private boolean reads;
+
+	private boolean blocked;
 
 	public Book() {
 		super();
@@ -72,11 +81,11 @@ public class Book implements Serializable {
 	}
 
 	public String getTitle() {
-		return this.Title;
+		return this.title;
 	}
 
 	public void setTitle(String Title) {
-		this.Title = Title;
+		this.title = Title;
 	}
 
 	public String getDescription() {
@@ -127,14 +136,28 @@ public class Book implements Serializable {
 		this.section = section;
 	}
 
-	
-
 	public boolean isBlocked() {
 		return blocked;
 	}
 
 	public void setBlocked(boolean blocked) {
 		this.blocked = blocked;
+	}
+
+	public String getBookNumber() {
+		return bookNumber;
+	}
+
+	public void setBookNumber(String bookNumber) {
+		this.bookNumber = bookNumber;
+	}
+
+	public boolean isReads() {
+		return reads;
+	}
+
+	public void setReads(boolean reads) {
+		this.reads = reads;
 	}
 
 	@Override

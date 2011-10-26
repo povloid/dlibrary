@@ -9,7 +9,8 @@ import javax.persistence.metamodel.StaticMetamodel;
 @StaticMetamodel(Book.class)
 public class Book_ {
 	public static volatile SingularAttribute<Book, Long> id;
-	public static volatile SingularAttribute<Book, String> Title;
+	public static volatile SingularAttribute<Book, String> title;
+	public static volatile SingularAttribute<Book, String> bookNumber;
 	public static volatile SingularAttribute<Book, String> description;
 	public static volatile SingularAttribute<Book, String> author;
 	public static volatile SingularAttribute<Book, String> publishingHouse;
@@ -17,4 +18,5 @@ public class Book_ {
 	public static volatile ListAttribute<Book, Genre> genres;
 	public static volatile SingularAttribute<Book, Section> section;
 	public static volatile SingularAttribute<Book, Boolean> blocked;
+	public static volatile SingularAttribute<Book, Boolean> reads;
 }

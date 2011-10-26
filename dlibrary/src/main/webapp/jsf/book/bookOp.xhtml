@@ -59,10 +59,16 @@
 				<p:separator />  
 				<h:panelGrid id="detail2" columns="2" styleClass="grid">
 
+					<h:outputLabel value="Код:" />
+					<p:inputText value="#{bookControl.edited.bookNumber}"
+						readonly="#{bookControl.del}" title="Код книги (Например табельный номер)" required="true"
+						requiredMessage="Необходимо ввести код книги" />
+
+
 					<h:outputLabel value="Название:" />
 					<p:inputText value="#{bookControl.edited.title}"
 						readonly="#{bookControl.del}" title="Название" required="true"
-						requiredMessage="The KeyName field is required." />
+						requiredMessage="Необходимо ввести название книги." />
 
 
 					<h:outputLabel value="Автор:" />

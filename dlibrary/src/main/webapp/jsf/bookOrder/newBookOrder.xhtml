@@ -23,18 +23,285 @@
 	<ui:define name="content">
 
 		<f:metadata>
-			<!-- 			<f:event type="preRenderView" listener="#{bookControl.init}" /> -->
+			<f:event type="preRenderView" listener="#{newBookOrderControl.init}" />
 			<!--  f:event type="postAddToView" listener="#{bookControl.update}" / -->
 			<!--  f:event type="javax.faces.event.PostRestoreStateEvent" listener="#{bookControl.update}" / -->
 			<!-- 			<f:viewParam name="page" value="#{bookControl.page}" /> -->
 			<!-- 			<f:viewParam name="csortField" value="#{bookControl.csortField}" /> -->
 			<!-- 			<f:viewParam name="csortOrder" value="#{bookControl.csortOrder}" /> -->
 			<!-- 			<f:viewParam name="retUrl" value="#{bookControl.retUrl}" /> -->
+			<f:viewParam name="init" value="#{newBookOrderControl.init}" />
 		</f:metadata>
 
-		<h:form id="form">
+		<h:form id="form1">
 
 			<p:growl id="msgs" showDetail="true" />
+
+
+			<p:dialog id="selectDiscipleDialog" header="Выбрать читателя"
+				modal="true" widgetVar="selectDiscipleDialog">
+
+
+				<p:dataTable id="table1" var="row" paginator="true"
+					rows="#{newBookOrderControl.rows}" rowKey="#{row.id}"
+					selection="#{newBookOrderControl.selectedDisciple}"
+					selectionMode="single" value="#{newBookOrderControl.disciples}"
+					paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+					rowsPerPageTemplate="5,10,15,20,30,50,100"
+					widgetVar="selectDisciplesTable" emptyMessage="Таблица пустая">
+
+					<f:facet name="header">  
+           						 Читатели  
+       			    </f:facet>
+
+					<p:column headerText="№" sortBy="#{row.id}" filterBy="#{row.id}">
+						<h:outputText value="#{row.id}" />
+					</p:column>
+
+					<p:column headerText="Фамилия" sortBy="#{row.fname}"
+						filterBy="#{row.fname}">
+						<h:outputText value="#{row.fname}" />
+					</p:column>
+
+					<p:column headerText="Имя" sortBy="#{row.iname}"
+						filterBy="#{row.iname}">
+						<h:outputText value="#{row.iname}" />
+					</p:column>
+
+
+					<p:column headerText="Отчество">
+						<h:outputText value="#{row.lname}" />
+					</p:column>
+
+				</p:dataTable>
+
+				<h:panelGrid columns="2" cellpadding="5">
+
+
+					<f:facet name="footer">
+						<p:commandButton value="Выбрать" update="form1"
+							onstart="selectDiscipleDialog.hide()" />
+					</f:facet>
+				</h:panelGrid>
+
+			</p:dialog>
+
+			<p:fieldset legend="Читатель">
+				<p:commandButton value="Выбрать"
+					actionListener="#{newBookOrderControl.initDisciples}"
+					update="table1" onclick="selectDiscipleDialog.show()">
+					<f:setPropertyActionListener value="#{null}"
+						target="#{newBookOrderControl.selectedDisciple}" />
+				</p:commandButton>
+
+				<p:outputPanel id="nodiscipleinfo"
+					rendered="#{newBookOrderControl.selectedDisciple == null}">
+			  		Читатель не выбран
+			  	</p:outputPanel>
+
+				<p:outputPanel id="discipleinfo"
+					rendered="#{newBookOrderControl.selectedDisciple != null}">
+
+					<h:panelGrid id="display" columns="2" cellpadding="4"
+						style="margin:0 auto;">
+
+						<f:facet name="header">  
+								Вбран следующий читатель:
+           				</f:facet>
+
+						<h:outputText value="№:" />
+						<h:panelGroup>
+							<h:outputText value="#{newBookOrderControl.selectedDisciple.id}"
+								style="font-weight:bold" />
+
+						</h:panelGroup>
+
+						<h:outputText value="Фамилия:" />
+						<h:panelGroup>
+							<h:outputText
+								value="#{newBookOrderControl.selectedDisciple.fname}"
+								style="font-weight:bold" />
+
+						</h:panelGroup>
+
+						<h:outputText value="Имя:" />
+						<h:panelGroup>
+							<h:outputText
+								value="#{newBookOrderControl.selectedDisciple.iname}"
+								style="font-weight:bold" />
+
+						</h:panelGroup>
+
+						<h:outputText value="Отчество:" />
+						<h:panelGroup>
+							<h:outputText
+								value="#{newBookOrderControl.selectedDisciple.lname}"
+								style="font-weight:bold" />
+
+						</h:panelGroup>
+
+						<h:outputText value="Дата рождения:" />
+						<h:panelGroup>
+
+							<h:outputText
+								value="#{newBookOrderControl.selectedDisciple.wbdate}"
+								style="font-weight:bold">
+								<f:convertDateTime type="date" />
+							</h:outputText>
+						</h:panelGroup>
+
+						<h:outputText value="Прочая информация:" />
+						<h:panelGroup>
+							<h:outputText
+								value="#{newBookOrderControl.selectedDisciple.description}"
+								style="font-weight:bold; maxwidth: 300px" />
+
+						</h:panelGroup>
+					</h:panelGrid>
+				</p:outputPanel>
+			</p:fieldset>
+
+			<br />
+
+
+
+
+
+
+
+			<p:dialog id="selectBookDialog" header="Выбрать книгу" modal="true"
+				widgetVar="selectBookDialog">
+
+
+				<p:dataTable id="selectBooksTable" var="row" paginator="true"
+					rows="#{newBookOrderControl.rows}" rowKey="#{row.id}"
+					selection="#{newBookOrderControl.selectedBook}"
+					selectionMode="single" value="#{newBookOrderControl.books}"
+					widgetVar="selectBooksTable" emptyMessage="Таблица пустая">
+
+					<f:facet name="header">  
+           						 Книги
+       			    </f:facet>
+
+					<p:column headerText="Секция" sortBy="#{row.section.keyName}"
+						filterBy="#{row.section.keyName}">
+						<h:outputText value="#{row.section.keyName}" />
+					</p:column>
+
+					<p:column headerText="№" sortBy="#{row.id}" filterBy="#{row.id}">
+						<h:outputText value="#{row.id}" />
+					</p:column>
+
+					<p:column headerText="Код книги" sortBy="#{row.bookNumber}"
+						filterBy="#{row.bookNumber}">
+						<h:outputText value="#{row.bookNumber}" />
+					</p:column>
+
+
+					<p:column headerText="Название книги" sortBy="#{row.title}"
+						filterBy="#{row.title}">
+						<h:outputText value="#{row.title}" />
+					</p:column>
+
+					<p:column headerText="Описание">
+						<h:outputText value="#{row.description}" />
+					</p:column>
+
+
+					<p:column headerText="Уже выд." sortBy="#{row.reads}"
+						filterBy="#{row.reads}">
+						<h:outputText value="#{row.reads ? 'да':'нет'}" />
+					</p:column>
+
+					<p:column headerText="Блок." sortBy="#{row.blocked}"
+						filterBy="#{row.blocked}">
+						<h:outputText value="#{row.blocked ? 'да':'нет'}" />
+					</p:column>
+
+				</p:dataTable>
+
+				<h:panelGrid columns="2" cellpadding="5">
+					<f:facet name="footer">
+						<p:commandButton value="Выбрать" update="form1"
+							onstart="selectBookDialog.hide()" />
+					</f:facet>
+				</h:panelGrid>
+
+			</p:dialog>
+
+
+
+			<p:fieldset legend="Выдача книг"
+				rendered="#{newBookOrderControl.selectedDisciple != null}">
+
+				<p:messages showDetail="true" autoUpdate="true" />
+
+
+
+
+				<h:panelGrid id="detail1" columns="2" styleClass="grid">
+
+					<h:outputText value="Заметки при выдаче:" />
+					<p:inputTextarea
+						value="#{newBookOrderControl.newBookOrder.description}"
+						style="width:300px;height:100px;" title="Заметки" />
+
+
+
+				</h:panelGrid>
+
+				<p:separator />
+				<p:commandButton value="Добавить книгу"
+					actionListener="#{newBookOrderControl.initBooks}" update="selectBooksTable"
+					onclick="selectBookDialog.show()">
+					<f:setPropertyActionListener value="#{null}"
+						target="#{newBookOrderControl.selectedBook}" />
+				</p:commandButton>
+
+				<p:dataTable var="item"
+					value="#{newBookOrderControl.newBookOrder.items}"
+					emptyMessage="Пусто" widgetVar="booksListTable1">
+
+					<f:facet name="header">
+				 		Список книг
+			    	</f:facet>
+
+					<p:column headerText="Название книги">
+						<h:outputText value="#{item.book.title}" />
+					</p:column>
+
+					<p:column headerText="Автор">
+						<h:outputText value="#{item.book.author}" />
+					</p:column>
+
+					<p:column headerText="Пометки при выдаче">
+						<h:outputText value="#{item.description}" />
+					</p:column>
+
+					<p:column headerText="Действия">
+
+					</p:column>
+				</p:dataTable>
+
+				<h:panelGroup>
+					<!-- 							<p:commandButton rendered="#{bookControl.add}" ajax="false" -->
+					<!-- 								image="ui-icon add" style="margin-right:20px;" value="Создать" -->
+					<!-- 								action="#{bookControl.cAdd()}" /> -->
+				</h:panelGroup>
+
+
+
+			</p:fieldset>
+
+			<br />
+
+
+
+			<p:fieldset legend="Книги, которые числятся на читателе"
+				rendered="#{newBookOrderControl.selectedDisciple != null}">
+
+
+			</p:fieldset>
 
 
 

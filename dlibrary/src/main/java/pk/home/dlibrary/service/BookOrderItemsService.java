@@ -1,5 +1,7 @@
 package pk.home.dlibrary.service;
 
+import java.io.Serializable;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,8 +15,13 @@ import pk.home.dlibrary.domain.BookOrder;
 
 @Service
 @Transactional
-public class BookOrderItemsService extends AbstractBasicService<BookOrder>{
+public class BookOrderItemsService extends AbstractBasicService<BookOrder>
+	implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -1817866402045548679L;
 	@Autowired
 	private BookOrderDAO bookOrderDAO;
 	

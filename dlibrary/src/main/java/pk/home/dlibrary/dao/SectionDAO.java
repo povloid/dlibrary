@@ -1,15 +1,22 @@
 package pk.home.dlibrary.dao;
 
+import java.io.Serializable;
+
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import pk.home.dlibrary.domain.Section;
 
-
 @Repository
 @Transactional
-public class SectionDAO extends AbstractBasicDAO<Section>{
+public class SectionDAO extends AbstractBasicDAO<Section> implements
+		Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3272027126286728965L;
 
 	@Override
 	protected Class<Section> getTClass() {
@@ -22,7 +29,7 @@ public class SectionDAO extends AbstractBasicDAO<Section>{
 	 */
 	@PersistenceContext(unitName = "")
 	private EntityManager entityManager;
-	
+
 	@Override
 	public EntityManager getEntityManager() {
 		return entityManager;
@@ -32,5 +39,5 @@ public class SectionDAO extends AbstractBasicDAO<Section>{
 	public Object getPrimaryKey(Section o) {
 		return o.getId();
 	}
-	
+
 }

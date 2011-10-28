@@ -152,6 +152,7 @@ public abstract class AbstractBasicDAO<T extends Object> {
 	 */
 	@Transactional
 	public T persist(T o) throws Exception {
+		System.out.print(">>>PERSIST: " + o.toString());
 		getEntityManager().persist(o);
 		return o;
 	}

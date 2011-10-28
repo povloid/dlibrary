@@ -223,6 +223,7 @@
 				<h:panelGrid columns="2" cellpadding="5">
 					<f:facet name="footer">
 						<p:commandButton value="Выбрать" update="form1"
+							actionListener="#{newBookOrderControl.addItem}"
 							onstart="selectBookDialog.hide()" />
 					</f:facet>
 				</h:panelGrid>
@@ -252,8 +253,8 @@
 
 				<p:separator />
 				<p:commandButton value="Добавить книгу"
-					actionListener="#{newBookOrderControl.initBooks}" update="selectBooksTable"
-					onclick="selectBookDialog.show()">
+					actionListener="#{newBookOrderControl.initBooks}"
+					update="selectBooksTable" onclick="selectBookDialog.show()">
 					<f:setPropertyActionListener value="#{null}"
 						target="#{newBookOrderControl.selectedBook}" />
 				</p:commandButton>
@@ -284,11 +285,13 @@
 				</p:dataTable>
 
 				<h:panelGroup>
-					<!-- 							<p:commandButton rendered="#{bookControl.add}" ajax="false" -->
-					<!-- 								image="ui-icon add" style="margin-right:20px;" value="Создать" -->
-					<!-- 								action="#{bookControl.cAdd()}" /> -->
+
 				</h:panelGroup>
 
+				<p:separator />
+				<p:commandButton value="Записать"
+					action="#{newBookOrderControl.addNewBookOrder()}" update="form1">
+				</p:commandButton>
 
 
 			</p:fieldset>

@@ -4,6 +4,9 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -14,6 +17,8 @@ import pk.home.dlibrary.domain.BookOrder;
 import pk.home.dlibrary.domain.Book_;
 import pk.home.dlibrary.domain.Disciple;
 import pk.home.dlibrary.domain.Disciple_;
+import pk.home.dlibrary.domain.Item;
+import pk.home.dlibrary.service.BookOrderItemsService;
 import pk.home.dlibrary.service.BookService;
 import pk.home.dlibrary.service.DiscipleService;
 
@@ -31,6 +36,9 @@ public class NewBookOrderControl implements Serializable {
 
 	@Autowired
 	private BookService bookService;
+
+	@Autowired
+	private BookOrderItemsService bookOrderItemsService;
 
 	private String init;
 
@@ -61,7 +69,7 @@ public class NewBookOrderControl implements Serializable {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void initBooks() {
 		try {
 			this.books.clear();
@@ -71,7 +79,6 @@ public class NewBookOrderControl implements Serializable {
 			e.printStackTrace();
 		}
 	}
-	
 
 	private Disciple selectedDisciple;
 
@@ -123,13 +130,6 @@ public class NewBookOrderControl implements Serializable {
 		this.newBookOrder = newBookOrder;
 	}
 
-	public String addNewBookOrder() {
-
-		this.newBookOrder = new BookOrder(); // После добавления создаем новый
-												// пустой
-		return null;
-	}
-
 	private Book selectedBook;
 
 	public Book getSelectedBook() {
@@ -138,6 +138,51 @@ public class NewBookOrderControl implements Serializable {
 
 	public void setSelectedBook(Book selectedBook) {
 		this.selectedBook = selectedBook;
+	}
+
+	/**
+	 * Добавление записи
+	 */
+	public void addItem() {
+		Item item = new Item();
+		item.setBookOrder(newBookOrder);
+		item.setBook(selectedBook);
+
+		boolean bookHasAdded = false;
+		for (Item i : this.newBookOrder.getItems()) { // Проверка на уже
+														// добавленные
+			if (i.getBook().getId() == selectedBook.getId()) {
+				bookHasAdded = true;
+				break;
+			}
+		}
+
+		if (!bookHasAdded && !selectedBook.isBlocked()
+				&& !selectedBook.isReads())
+			this.newBookOrder.getItems().add(item);
+	}
+
+	/**
+	 * Save new order
+	 * 
+	 * @return
+	 */
+	public String addNewBookOrder() {
+		try {
+
+			bookOrderItemsService.addNewBookOrder(this.newBookOrder);
+
+			this.newBookOrder = new BookOrder(); // После добавления создаем
+													// новый
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			FacesContext.getCurrentInstance().addMessage(
+					null,
+					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error: ", e
+							.getMessage()));
+		}
+		return null;
 	}
 
 }

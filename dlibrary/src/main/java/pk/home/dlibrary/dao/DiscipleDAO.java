@@ -1,22 +1,15 @@
 package pk.home.dlibrary.dao;
 
-import java.io.Serializable;
-
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import pk.home.dlibrary.domain.Disciple;
 
+
 @Repository
 @Transactional
-public class DiscipleDAO extends AbstractBasicDAO<Disciple> implements
-		Serializable {
-
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 9141701327359867666L;
+public class DiscipleDAO extends AbstractBasicDAO<Disciple>{
 
 	@Override
 	protected Class<Disciple> getTClass() {
@@ -29,7 +22,7 @@ public class DiscipleDAO extends AbstractBasicDAO<Disciple> implements
 	 */
 	@PersistenceContext(unitName = "")
 	private EntityManager entityManager;
-
+	
 	@Override
 	public EntityManager getEntityManager() {
 		return entityManager;
@@ -39,5 +32,5 @@ public class DiscipleDAO extends AbstractBasicDAO<Disciple> implements
 	public Object getPrimaryKey(Disciple o) {
 		return o.getId();
 	}
-
+	
 }

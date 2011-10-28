@@ -1,29 +1,32 @@
 package pk.home.dlibrary.service;
 
-import java.io.Serializable;
+import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import pk.home.dlibrary.dao.AbstractBasicDAO;
+import pk.home.dlibrary.dao.BookDAO;
 import pk.home.dlibrary.dao.BookOrderDAO;
 import pk.home.dlibrary.dao.ItemsDAO;
+import pk.home.dlibrary.domain.Book;
 import pk.home.dlibrary.domain.BookOrder;
+import pk.home.dlibrary.domain.Item;
 
 
 
 @Service
 @Transactional
-public class BookOrderItemsService extends AbstractBasicService<BookOrder>
-	implements Serializable{
+public class BookOrderItemsService extends AbstractBasicService<BookOrder>{
 	
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -1817866402045548679L;
 	@Autowired
 	private BookOrderDAO bookOrderDAO;
+	
+	@Autowired
+	private BookDAO bookDAO;
 	
 	@Override
 	public AbstractBasicDAO<BookOrder> getAbstractBasicDAO() {
@@ -39,9 +42,26 @@ public class BookOrderItemsService extends AbstractBasicService<BookOrder>
 	 * @return
 	 * @throws Exception
 	 */
+	@ExceptionHandler(Exception.class)
+	@Transactional(propagation = Propagation.REQUIRED, rollbackFor=Exception.class)
 	public BookOrder addNewBookOrder(BookOrder bookOrder) throws Exception{
 		if(bookOrder.getItems() == null || bookOrder.getItems().size() == 0)
 			throw new Exception("<<<ERROR: The items is empty.");
+		
+		for(Item i: bookOrder.getItems()){
+			Book tbook = bookDAO.find(i.getBook().getId());
+			if(tbook == null){
+				throw new Exception("Книга " + i.getBook().getTitle() +  " была удалена.");
+			} else if(tbook.isBlocked()) {
+				throw new Exception("Книга " + i.getBook().getTitle() +  " была заблокирована.");
+			} else if(tbook.isReads()) {
+				throw new Exception("Книга " + i.getBook().getTitle() +  " находится у читателя.");
+			} else {
+				i.getBook().setReads(true);
+			}
+		}
+		
+		bookOrder.setCdate(new Date());
 		
 		return bookOrderDAO.persist(bookOrder);
 	}

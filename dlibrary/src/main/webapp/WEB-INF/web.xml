@@ -42,6 +42,11 @@
 	<listener>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
+	<listener> 
+  	<listener-class>
+    	org.springframework.web.context.request.RequestContextListener
+  	</listener-class>  
+	</listener> 
 	<context-param>
 		<param-name>javax.faces.DEFAULT_SUFFIX</param-name>
 		<param-value>.xhtml</param-value>

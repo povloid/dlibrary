@@ -10,6 +10,8 @@ import javax.faces.context.FacesContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
+
 
 import pk.home.dlibrary.dao.AbstractBasicDAO.SortOrderType;
 import pk.home.dlibrary.domain.Book;
@@ -22,8 +24,10 @@ import pk.home.dlibrary.service.BookOrderItemsService;
 import pk.home.dlibrary.service.BookService;
 import pk.home.dlibrary.service.DiscipleService;
 
+
 @Scope("session")
 @Component("newBookOrderControl")
+@Transactional
 public class NewBookOrderControl implements Serializable {
 
 	/**
@@ -88,6 +92,7 @@ public class NewBookOrderControl implements Serializable {
 
 	public void setSelectedDisciple(Disciple selectedDisciple) {
 		this.selectedDisciple = selectedDisciple;
+		initDiscipleCurrentBookOrders();
 	}
 
 	List<Disciple> disciples = new ArrayList<Disciple>();
@@ -183,6 +188,52 @@ public class NewBookOrderControl implements Serializable {
 							.getMessage()));
 		}
 		return null;
+	}
+
+	List<BookOrder> discipleCurrentBookOrders = new ArrayList<BookOrder>();
+
+	public List<BookOrder> DiscipleCurrentBookOrders() {
+
+		try {
+			return bookOrderItemsService.getAllEntities();
+		} catch (Exception e) {
+			e.printStackTrace();
+			FacesContext.getCurrentInstance().addMessage(
+					null,
+					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error: ", e
+							.getMessage()));
+		}
+
+		return null;
+	}
+
+	public List<BookOrder> getDiscipleCurrentBookOrders() {
+		return discipleCurrentBookOrders;
+	}
+
+	public void setDiscipleCurrentBookOrders(
+			List<BookOrder> discipleCurrentBookOrders) {
+		this.discipleCurrentBookOrders = discipleCurrentBookOrders;
+	}
+
+
+	@Transactional
+	public void initDiscipleCurrentBookOrders() {
+		try {
+			this.discipleCurrentBookOrders = bookOrderItemsService
+					.getAllEntities();
+			
+			for(BookOrder bo : this.discipleCurrentBookOrders){
+				System.out.println(bo.getItems().size());
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			FacesContext.getCurrentInstance().addMessage(
+					null,
+					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error: ", e
+							.getMessage()));
+		}
 	}
 
 }

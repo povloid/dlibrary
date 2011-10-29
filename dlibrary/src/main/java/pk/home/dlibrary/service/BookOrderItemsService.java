@@ -48,6 +48,11 @@ public class BookOrderItemsService extends AbstractBasicService<BookOrder>{
 		if(bookOrder.getItems() == null || bookOrder.getItems().size() == 0)
 			throw new Exception("<<<ERROR: The items is empty.");
 		
+		if(bookOrder.getItems().size() == 0){
+			throw new Exception("Ордер неможет быть сохранен. Список книг пуст.");
+		}
+		
+		
 		for(Item i: bookOrder.getItems()){
 			Book tbook = bookDAO.find(i.getBook().getId());
 			if(tbook == null){

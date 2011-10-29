@@ -304,6 +304,48 @@
 				rendered="#{newBookOrderControl.selectedDisciple != null}">
 
 
+				<ui:repeat value="#{newBookOrderControl.discipleCurrentBookOrders}"
+					var="bookOrderRow">
+					<h:panelGroup layout="block">
+						<h:outputLabel value="id:" />
+						<h:outputText value="#{bookOrderRow.id}" />
+						<br />
+
+						<p:dataTable var="item"
+							value="#{bookOrderRow.items}"
+							emptyMessage="Пусто">
+
+							<f:facet name="header">
+				 				Список книг
+			    			</f:facet>
+
+							<p:column headerText="Название книги">
+								<h:outputText value="#{item.book.title}" />
+							</p:column>
+
+							<p:column headerText="Автор">
+								<h:outputText value="#{item.book.author}" />
+							</p:column>
+
+							<p:column headerText="Пометки при выдаче">
+								<h:outputText value="#{item.description}" />
+							</p:column>
+
+							<p:column headerText="Действия">
+
+							</p:column>
+
+
+						</p:dataTable>
+					
+
+					</h:panelGroup>
+					
+					<p:separator />
+					
+				</ui:repeat>
+
+
 			</p:fieldset>
 
 

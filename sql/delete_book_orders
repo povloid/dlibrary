@@ -1,0 +1,3 @@
+﻿delete from item;
+delete from bookorder;
+update book set reads=false;

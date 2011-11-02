@@ -19,6 +19,8 @@ import org.hibernate.validator.constraints.Length;
 @Table(schema = "public", name = "bookorder")
 @NamedQueries({
 		@NamedQuery(name = "BookOrder.findAll", query = "select a from BookOrder a order by a.id"),
+		@NamedQuery(name = "BookOrder.findByDisciple", query = "select a from BookOrder a where a.disciple=?1 order by a.id desc"),
+		@NamedQuery(name = "BookOrder.findByDiscipleActiv", query = "select a from BookOrder a where a.disciple=?1 and a.closed=FALSE  order by a.id desc"),
 		@NamedQuery(name = "BookOrder.findByPrimaryKey", query = "select a from BookOrder a where a.id = ?1") })
 public class BookOrder implements Serializable {
 
@@ -41,7 +43,7 @@ public class BookOrder implements Serializable {
 	private String description;
 
 	@ManyToOne
-	@JoinColumn(referencedColumnName = "id")
+	@JoinColumn(referencedColumnName = "id",nullable=false)
 	private Disciple disciple;
 
 	@Column(nullable = false)

@@ -175,11 +175,13 @@ public class NewBookOrderControl implements Serializable {
 	public String addNewBookOrder() {
 		try {
 
+			this.newBookOrder.setDisciple(selectedDisciple);
 			bookOrderItemsService.addNewBookOrder(this.newBookOrder);
 
 			this.newBookOrder = new BookOrder(); // После добавления создаем
 													// новый
-
+			initDiscipleCurrentBookOrders();
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 			FacesContext.getCurrentInstance().addMessage(
@@ -219,12 +221,16 @@ public class NewBookOrderControl implements Serializable {
 
 	@Transactional
 	public void initDiscipleCurrentBookOrders() {
+		
+		if(this.selectedDisciple == null)
+			return;
+		
 		try {
-			this.discipleCurrentBookOrders = bookOrderItemsService
-					.getAllEntities();
+			this.discipleCurrentBookOrders = bookOrderItemsService.findByDiscipleActiv(this.selectedDisciple);
 			
-			for(BookOrder bo : this.discipleCurrentBookOrders){
-				System.out.println(bo.getItems().size());
+			for(BookOrder bo : this.discipleCurrentBookOrders){ // Lazy init
+				if(bo.getItems() != null)
+					bo.getItems().size();
 			}
 			
 		} catch (Exception e) {

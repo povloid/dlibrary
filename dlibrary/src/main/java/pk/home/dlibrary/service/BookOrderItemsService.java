@@ -1,6 +1,7 @@
 package pk.home.dlibrary.service;
 
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,6 +15,7 @@ import pk.home.dlibrary.dao.BookOrderDAO;
 import pk.home.dlibrary.dao.ItemsDAO;
 import pk.home.dlibrary.domain.Book;
 import pk.home.dlibrary.domain.BookOrder;
+import pk.home.dlibrary.domain.Disciple;
 import pk.home.dlibrary.domain.Item;
 
 
@@ -62,7 +64,10 @@ public class BookOrderItemsService extends AbstractBasicService<BookOrder>{
 			} else if(tbook.isReads()) {
 				throw new Exception("Книга " + i.getBook().getTitle() +  " находится у читателя.");
 			} else {
+				
 				i.getBook().setReads(true);
+				bookDAO.merge(i.getBook()); // Иначе само не обновляет
+				
 			}
 		}
 		
@@ -70,19 +75,17 @@ public class BookOrderItemsService extends AbstractBasicService<BookOrder>{
 		
 		return bookOrderDAO.persist(bookOrder);
 	}
-
-
 	
-	
-	
-	
-	
-	
-	
-
-	
-	
-	
+	/**
+	 * Select actived orders
+	 * @param disciple
+	 * @return
+	 * @throws Exception
+	 */
+	@Transactional
+	public List<BookOrder> findByDiscipleActiv(Disciple disciple) throws Exception{
+		return bookOrderDAO.executeQueryByName("BookOrder.findByDiscipleActiv", new Object[]{disciple});
+	}
 	
 	
 	

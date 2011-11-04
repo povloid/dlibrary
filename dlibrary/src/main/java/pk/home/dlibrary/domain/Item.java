@@ -106,8 +106,13 @@ public class Item implements Serializable {
 			return false;
 		}
 		Item other = (Item) object;
+		
 		if ((this.id == null && other.id != null)
-				|| (this.id != null && !this.id.equals(other.id))) {
+				|| (this.id != null && !this.id.equals(other.id))
+				// Additional compare metods
+				|| (this.book == null && other.book != null) 
+				|| (this.book != null && other.book == null)
+				|| (!this.book.equals(other.book) || !this.bookOrder.equals(other.bookOrder)) ) {
 			return false;
 		}
 		return true;

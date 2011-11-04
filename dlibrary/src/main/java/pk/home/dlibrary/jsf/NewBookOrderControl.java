@@ -240,6 +240,42 @@ public class NewBookOrderControl implements Serializable {
 		}
 	}
 
+	private Item currentNewItem;
+
+	public Item getCurrentNewItem() {
+		return currentNewItem;
+	}
+
+	public void setCurrentNewItem(Item currentNewItem) {
+		this.currentNewItem = currentNewItem;
+	}
+
+	public void deleteNewBook() {
+		try {
+
+			Item ti = null;
+			
+			for (Item i : newBookOrder.getItems()) 
+				if (i.getBook().getId() == currentNewItem.getBook().getId()) {
+					ti = i;
+					break;
+				}
+			
+			newBookOrder.getItems().remove(ti);
+			
+			
+			for (Item i : newBookOrder.getItems()) 
+				System.out.println("*>>>" + i.getBook().getTitle());
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			FacesContext.getCurrentInstance().addMessage(
+					null,
+					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error: ", e
+							.getMessage()));
+		}
+	}
+
 	// Возврат книг
 	private Item curentRetItem;
 
@@ -251,7 +287,7 @@ public class NewBookOrderControl implements Serializable {
 		System.out.println(">>>> " + curentRetItem);
 		this.curentRetItem = curentRetItem;
 	}
-	
+
 	private long curentRetItemId;
 
 	public long getCurentRetItemId() {
@@ -261,10 +297,9 @@ public class NewBookOrderControl implements Serializable {
 	public void setCurentRetItemId(long curentRetItemId) {
 		this.curentRetItemId = curentRetItemId;
 	}
-	
-	
+
 	private long currentBookOrderId;
-	
+
 	public long getCurrentBookOrderId() {
 		return currentBookOrderId;
 	}
@@ -278,9 +313,9 @@ public class NewBookOrderControl implements Serializable {
 	 */
 	public void returnBook() {
 		try {
-			
+
 			bookOrderItemsService.returnBook(curentRetItemId);
-			
+
 			initDiscipleCurrentBookOrders();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -290,15 +325,15 @@ public class NewBookOrderControl implements Serializable {
 							.getMessage()));
 		}
 	}
-	
+
 	/**
 	 * Return the book
 	 */
 	public void closeBookOrder() {
 		try {
-			
+
 			bookOrderItemsService.closeBookOrder(currentBookOrderId);
-			
+
 			initDiscipleCurrentBookOrders();
 		} catch (Exception e) {
 			e.printStackTrace();

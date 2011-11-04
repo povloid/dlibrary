@@ -222,7 +222,7 @@
 
 
 
-			<p:fieldset legend="Выдача книг"
+			<p:fieldset legend="Выдача книг" 
 				rendered="#{newBookOrderControl.selectedDisciple != null}">
 
 
@@ -249,7 +249,7 @@
 						target="#{newBookOrderControl.selectedBook}" />
 				</p:commandButton>
 
-				<p:dataTable var="item"
+				<p:dataTable var="item" id="booksListTable1"
 					value="#{newBookOrderControl.newBookOrder.items}"
 					emptyMessage="Пусто" widgetVar="booksListTable1">
 
@@ -265,12 +265,16 @@
 						<h:outputText value="#{item.book.author}" />
 					</p:column>
 
-					<p:column headerText="Пометки при выдаче">
-						<h:outputText value="#{item.description}" />
-					</p:column>
+<!-- 					<p:column headerText="Пометки при выдаче"> -->
+<!-- 						<h:outputText value="#{item.description}" /> -->
+<!-- 					</p:column> -->
 
 					<p:column headerText="Действия">
-
+						<p:commandButton value="Закрыть"
+							action="#{newBookOrderControl.deleteNewBook()}"
+							image="ui-icon del" update=":form1" >
+							<f:setPropertyActionListener target="#{newBookOrderControl.currentNewItem}" value="#{item}" />
+						</p:commandButton>
 					</p:column>
 				</p:dataTable>
 

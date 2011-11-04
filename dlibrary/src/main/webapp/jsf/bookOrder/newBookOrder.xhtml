@@ -13,7 +13,7 @@
     </ui:define>
 
 	<ui:define name="header_icon">
-		<img src="#{request.contextPath}/images/icons/addbk_24.png"></img>
+		<img src="#{request.contextPath}/images/icons/notep_24.png"></img>
 	</ui:define>
 
 	<ui:define name="header">
@@ -25,6 +25,10 @@
 		<f:metadata>
 			<f:event type="preRenderView" listener="#{newBookOrderControl.init}" />
 			<f:viewParam name="init" value="#{newBookOrderControl.init}" />
+			<f:viewParam name="curentRetItemId"
+				value="#{newBookOrderControl.curentRetItemId}" />
+			<f:viewParam name="currentBookOrderId"
+				value="#{newBookOrderControl.currentBookOrderId}" />
 		</f:metadata>
 
 		<h:form id="form1">
@@ -32,7 +36,8 @@
 
 			<!-- Читатель  -->
 
-			<p:growl id="msgs" showDetail="true"/>
+			<p:growl id="msgs" showDetail="true" />
+			<p:messages showDetail="true" autoUpdate="true" />
 
 			<p:dialog id="selectDiscipleDialog" header="Выбрать читателя"
 				modal="true" widgetVar="selectDiscipleDialog">
@@ -83,7 +88,7 @@
 			</p:dialog>
 
 			<p:fieldset legend="Читатель">
-				<p:commandButton value="Выбрать"
+				<p:commandButton value="Выбрать" image="ui-icon user"
 					actionListener="#{newBookOrderControl.initDisciples}"
 					update="table1" onclick="selectDiscipleDialog.show()">
 					<f:setPropertyActionListener value="#{null}"
@@ -95,65 +100,53 @@
 			  		Читатель не выбран
 			  	</p:outputPanel>
 
-				
+
 				<p:outputPanel id="discipleinfo"
 					rendered="#{newBookOrderControl.selectedDisciple != null}">
 
 					<h:panelGrid id="display" columns="2" cellpadding="4"
-						style="margin:0 auto;">
+						styleClass="grid">
 
 						<f:facet name="header">  
 								Вбран следующий читатель:
            				</f:facet>
 
 						<h:outputText value="№:" />
-						<h:panelGroup>
-							<h:outputText value="#{newBookOrderControl.selectedDisciple.id}"
-								style="font-weight:bold" />
+						<h:outputText value="#{newBookOrderControl.selectedDisciple.id}"
+							style="font-weight:bold" />
 
-						</h:panelGroup>
 
 						<h:outputText value="Фамилия:" />
-						<h:panelGroup>
-							<h:outputText
-								value="#{newBookOrderControl.selectedDisciple.fname}"
-								style="font-weight:bold" />
+						<h:outputText
+							value="#{newBookOrderControl.selectedDisciple.fname}"
+							style="font-weight:bold; width: 70%" />
 
-						</h:panelGroup>
 
 						<h:outputText value="Имя:" />
-						<h:panelGroup>
-							<h:outputText
-								value="#{newBookOrderControl.selectedDisciple.iname}"
-								style="font-weight:bold" />
+						<h:outputText
+							value="#{newBookOrderControl.selectedDisciple.iname}"
+							style="font-weight:bold; width: 70%" />
 
-						</h:panelGroup>
 
 						<h:outputText value="Отчество:" />
-						<h:panelGroup>
-							<h:outputText
-								value="#{newBookOrderControl.selectedDisciple.lname}"
-								style="font-weight:bold" />
+						<h:outputText
+							value="#{newBookOrderControl.selectedDisciple.lname}"
+							style="font-weight:bold; width: 70%" />
 
-						</h:panelGroup>
 
 						<h:outputText value="Дата рождения:" />
-						<h:panelGroup>
 
-							<h:outputText
-								value="#{newBookOrderControl.selectedDisciple.wbdate}"
-								style="font-weight:bold">
-								<f:convertDateTime type="date" />
-							</h:outputText>
-						</h:panelGroup>
+						<h:outputText
+							value="#{newBookOrderControl.selectedDisciple.wbdate}"
+							style="font-weight:bold; width: 70%">
+							<f:convertDateTime type="date" />
+						</h:outputText>
 
 						<h:outputText value="Прочая информация:" />
-						<h:panelGroup>
-							<h:outputText
-								value="#{newBookOrderControl.selectedDisciple.description}"
-								style="font-weight:bold; maxwidth: 300px" />
+						<h:outputText
+							value="#{newBookOrderControl.selectedDisciple.description}"
+							style="font-weight:bold; maxwidth: 300px; width: 70%" />
 
-						</h:panelGroup>
 					</h:panelGrid>
 				</p:outputPanel>
 			</p:fieldset>
@@ -232,7 +225,7 @@
 			<p:fieldset legend="Выдача книг"
 				rendered="#{newBookOrderControl.selectedDisciple != null}">
 
-				<p:messages showDetail="true" autoUpdate="true" />
+
 
 
 
@@ -249,7 +242,7 @@
 				</h:panelGrid>
 
 				<p:separator />
-				<p:commandButton value="Добавить книгу"
+				<p:commandButton value="Добавить книгу" image="ui-icon add"
 					actionListener="#{newBookOrderControl.initBooks}"
 					update="selectBooksTable" onclick="selectBookDialog.show()">
 					<f:setPropertyActionListener value="#{null}"
@@ -286,31 +279,53 @@
 				</h:panelGroup>
 
 				<p:separator />
-				<p:commandButton value="Записать"
-					action="#{newBookOrderControl.addNewBookOrder()}" update="form1">
-				</p:commandButton>
+				<p:commandButton value="Записать" onclick="confirmation.show()"
+					image="ui-icon edit" type="button" />
+
+
 
 
 			</p:fieldset>
 
+			<p:confirmDialog
+				message="Записать выбранные книги на данного ученика?"
+				header="Запись..." severity="alert" widgetVar="confirmation">
+
+				<p:commandButton value="Да" onstart="confirmation.hide()"
+					action="#{newBookOrderControl.addNewBookOrder()}" update="form1" />
+				<p:commandButton value="Нет" onclick="confirmation.hide()"
+					type="button" />
+			</p:confirmDialog>
+
+
 			<br />
 
- 
+
 			<!-- Список и возврат книг -->
-			
-			<p:separator style="height:10px" rendered="#{newBookOrderControl.selectedDisciple != null}" />
-			<br /> 
-			
+
+			<p:separator style="height:10px"
+				rendered="#{newBookOrderControl.selectedDisciple != null}" />
+			<br />
+
 
 			<p:fieldset legend="Книги, которые числятся на читателе"
+				id="retFieldSet"
 				rendered="#{newBookOrderControl.selectedDisciple != null}">
 
 
 				<ui:repeat value="#{newBookOrderControl.discipleCurrentBookOrders}"
 					var="bookOrderRow">
 					<h:panelGroup layout="block">
-						<h:outputLabel value="id:" />
+						<p:commandButton value="Закрыть"
+							action="#{newBookOrderControl.closeBookOrder()}"
+							image="ui-icon del" update=":form1:retFieldSet">
+							<f:param name="currentBookOrderId" value="#{bookOrderRow.id}" />
+						</p:commandButton>
+						<h:outputLabel value="№:" />
 						<h:outputText value="#{bookOrderRow.id}" />
+						<br />
+						<h:outputLabel value="Пометки: " />
+						<h:outputText value="#{bookOrderRow.description}" />
 						<br />
 
 						<p:dataTable var="item" value="#{bookOrderRow.items}"
@@ -319,6 +334,10 @@
 							<f:facet name="header">
 				 				Список книг
 			    			</f:facet>
+
+							<p:column headerText="#">
+								<h:outputText value="#{item.id}" />
+							</p:column>
 
 							<p:column headerText="Название книги">
 								<h:outputText value="#{item.book.title}" />
@@ -333,6 +352,21 @@
 							</p:column>
 
 							<p:column headerText="Действия">
+								<p:commandButton value="Вернуть книгу"
+									rendered="#{item.cldate==null}" image="ui-icon del"
+									oncomplete="confirmationReturn.show()">
+									<f:param name="curentRetItemId" value="#{item.id}" />
+								</p:commandButton>
+
+								<h:graphicImage id="image1" value="/images/icons/opts_16.png"
+									rendered="#{item.cldate!=null}" />
+								<h:outputText value="Книга возвращена: "
+									rendered="#{item.cldate!=null}" />
+								<h:outputText value="#{item.cldate}"
+									rendered="#{item.cldate!=null}">
+									<f:convertDateTime type="date" />
+								</h:outputText>
+
 
 							</p:column>
 
@@ -341,6 +375,18 @@
 					<p:separator />
 				</ui:repeat>
 			</p:fieldset>
+
+			<p:confirmDialog message="Осуществить возврат книги?"
+				header="Возврат..." severity="alert" widgetVar="confirmationReturn">
+
+				<p:commandButton value="Да" onstart="confirmationReturn.hide()"
+					action="#{newBookOrderControl.returnBook()}" update="retFieldSet" />
+				<p:commandButton value="Нет" onclick="confirmationReturn.hide()"
+					type="button" />
+			</p:confirmDialog>
+
+
+
 		</h:form>
 	</ui:define>
 

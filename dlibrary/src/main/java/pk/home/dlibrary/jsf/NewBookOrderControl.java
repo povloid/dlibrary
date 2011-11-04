@@ -12,7 +12,6 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-
 import pk.home.dlibrary.dao.AbstractBasicDAO.SortOrderType;
 import pk.home.dlibrary.domain.Book;
 import pk.home.dlibrary.domain.BookOrder;
@@ -23,7 +22,6 @@ import pk.home.dlibrary.domain.Item;
 import pk.home.dlibrary.service.BookOrderItemsService;
 import pk.home.dlibrary.service.BookService;
 import pk.home.dlibrary.service.DiscipleService;
-
 
 @Scope("session")
 @Component("newBookOrderControl")
@@ -181,7 +179,7 @@ public class NewBookOrderControl implements Serializable {
 			this.newBookOrder = new BookOrder(); // После добавления создаем
 													// новый
 			initDiscipleCurrentBookOrders();
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 			FacesContext.getCurrentInstance().addMessage(
@@ -218,21 +216,90 @@ public class NewBookOrderControl implements Serializable {
 		this.discipleCurrentBookOrders = discipleCurrentBookOrders;
 	}
 
-
 	@Transactional
 	public void initDiscipleCurrentBookOrders() {
-		
-		if(this.selectedDisciple == null)
+
+		if (this.selectedDisciple == null)
 			return;
-		
+
 		try {
-			this.discipleCurrentBookOrders = bookOrderItemsService.findByDiscipleActiv(this.selectedDisciple);
-			
-			for(BookOrder bo : this.discipleCurrentBookOrders){ // Lazy init
-				if(bo.getItems() != null)
+			this.discipleCurrentBookOrders = bookOrderItemsService
+					.findByDiscipleActiv(this.selectedDisciple);
+
+			for (BookOrder bo : this.discipleCurrentBookOrders) { // Lazy init
+				if (bo.getItems() != null)
 					bo.getItems().size();
 			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			FacesContext.getCurrentInstance().addMessage(
+					null,
+					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error: ", e
+							.getMessage()));
+		}
+	}
+
+	// Возврат книг
+	private Item curentRetItem;
+
+	public Item getCurentRetItem() {
+		return curentRetItem;
+	}
+
+	public void setCurentRetItem(Item curentRetItem) {
+		System.out.println(">>>> " + curentRetItem);
+		this.curentRetItem = curentRetItem;
+	}
+	
+	private long curentRetItemId;
+
+	public long getCurentRetItemId() {
+		return curentRetItemId;
+	}
+
+	public void setCurentRetItemId(long curentRetItemId) {
+		this.curentRetItemId = curentRetItemId;
+	}
+	
+	
+	private long currentBookOrderId;
+	
+	public long getCurrentBookOrderId() {
+		return currentBookOrderId;
+	}
+
+	public void setCurrentBookOrderId(long currentBookOrderId) {
+		this.currentBookOrderId = currentBookOrderId;
+	}
+
+	/**
+	 * Return the book
+	 */
+	public void returnBook() {
+		try {
 			
+			bookOrderItemsService.returnBook(curentRetItemId);
+			
+			initDiscipleCurrentBookOrders();
+		} catch (Exception e) {
+			e.printStackTrace();
+			FacesContext.getCurrentInstance().addMessage(
+					null,
+					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error: ", e
+							.getMessage()));
+		}
+	}
+	
+	/**
+	 * Return the book
+	 */
+	public void closeBookOrder() {
+		try {
+			
+			bookOrderItemsService.closeBookOrder(currentBookOrderId);
+			
+			initDiscipleCurrentBookOrders();
 		} catch (Exception e) {
 			e.printStackTrace();
 			FacesContext.getCurrentInstance().addMessage(

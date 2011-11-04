@@ -360,7 +360,6 @@
 <!-- 			<artifactId>jaybird</artifactId> -->
 <!-- 			<version>2.1.6</version> -->
 <!-- 		</dependency> -->
-
 	</dependencies>
 	
 
@@ -370,7 +369,6 @@
 
 
 	<repositories>
-
 		<repository>
 			<url>http://download.java.net/maven/2/</url>
 			<id>jsf20</id>
@@ -384,6 +382,10 @@
 			<layout>default</layout>
 		</repository>
 	</repositories>
+	
+	
+	
+	
 	<build>
 		<plugins>
 			<plugin>

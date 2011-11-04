@@ -115,7 +115,7 @@ public class Item implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Section[ id=" + id + " ]";
+		return "Item[ id=" + id + " ]";
 	}
 
 }

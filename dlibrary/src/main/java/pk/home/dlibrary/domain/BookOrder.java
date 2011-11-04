@@ -128,6 +128,6 @@ public class BookOrder implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Disciple[ id=" + id + " ]";
+		return "BookOrder[ id=" + id + " ]";
 	}
 }

@@ -36,7 +36,7 @@ public class BookOrderItemsService extends AbstractBasicService<BookOrder>{
 	}
 	
 	@Autowired
-	private ItemsDAO ItemDAO;
+	private ItemsDAO itemDAO;
 		
 	/**
 	 * Create new order
@@ -87,6 +87,56 @@ public class BookOrderItemsService extends AbstractBasicService<BookOrder>{
 		return bookOrderDAO.executeQueryByName("BookOrder.findByDiscipleActiv", new Object[]{disciple});
 	}
 	
+	
+	@Transactional
+	public void returnBook(Item item) throws Exception{
+		if(item == null)
+			throw new Exception("Item is null!!!");
+		
+		item.setCldate(new Date());
+		itemDAO.merge(item);		
+		
+		Book book = item.getBook();
+		book.setReads(false);
+		
+		bookDAO.merge(book);
+		
+	}
+	
+	
+	@Transactional
+	public void returnBook(Long curentRetItemId) throws Exception{
+		if(curentRetItemId == 0)
+			throw new Exception("Item is null!!!");
+		
+		Item item = itemDAO.find(curentRetItemId);
+		returnBook(item);
+	}
+	
+	
+	@Transactional
+	public void closeBookOrder(BookOrder bookOrder) throws Exception{
+		if(bookOrder == null)
+			throw new Exception("bookOrder is null!!!");
+		
+		for(Item i: bookOrder.getItems()){
+			if(i.getCldate() == null)
+				throw new Exception("bookOrder items is not closed");
+		}
+		
+		bookOrder.setClosed(true);
+		bookOrderDAO.merge(bookOrder);
+	}
+	
+	
+	
+	@Transactional
+	public void closeBookOrder(Long bookOrderId) throws Exception{
+		if(bookOrderId == 0)
+			throw new Exception("bookOrder is null!!!");
+		
+		closeBookOrder(bookOrderDAO.find(bookOrderId));
+	}
 	
 	
 

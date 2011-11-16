@@ -57,7 +57,7 @@ public abstract class AbstractBasicService<T extends Object> {
 	}
 	
 	@Transactional
-	public List<T> getAllEntities(int firstResult, int maxResults, 
+	public List<T> getAllEntities(int maxResults, int firstResult,  
 			SingularAttribute<T, ?> orderByAttribute, SortOrderType sortOrder)
 			throws Exception {
 		return getAbstractBasicDAO().getAllEntities(false, maxResults, firstResult, orderByAttribute, sortOrder);

@@ -1,11 +1,9 @@
 package pk.home.dlibrary.jsf.libs;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
-import org.primefaces.model.LazyDataModel;
-import org.primefaces.model.SortOrder;
 
 /**
  * Only View class
@@ -23,6 +21,9 @@ public abstract class ABaseCRUDView<T extends Object> {
 	 */
 	public void init() {
 		try {
+			prepereParams();
+			this.allRowsCount = initAllRowsCount();
+			calculateBeanParams();
 			aInit();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -43,9 +44,6 @@ public abstract class ABaseCRUDView<T extends Object> {
 	// -- bean params
 	// -------------------------------------------------------------------------------------------------
 
-	protected T selected;
-	protected T edited;
-
 	// ----------------------------------------------------------------------------------------------------------------
 
 	// request params
@@ -55,10 +53,15 @@ public abstract class ABaseCRUDView<T extends Object> {
 	private String pcsortField;
 
 	// session bean params
-	private Integer rows = 10;
-	private Integer page = 1;
-	private String csortOrder;
-	private String csortField;
+	protected Integer rows = 10;
+	protected Integer page = 1;
+	protected String csortOrder;
+	protected String csortField;
+
+	// calculate bean params
+	protected int allPagesCount;
+	protected long allRowsCount;
+	
 
 	/**
 	 * prepere params
@@ -77,101 +80,86 @@ public abstract class ABaseCRUDView<T extends Object> {
 		csortField = null;
 	}
 
-	// ----------------------------------------------------------------------------------------------------------------
-
 	/**
-	 * Lazy model
+	 * Calculate beans params
 	 */
-	private LazyDataModel<T> dataModel = new LazyDataModel<T>() {
-
-		/**
-		 * 
-		 */
-		private static final long serialVersionUID = -4256244307632901637L;
-
-		@Override
-		public List<T> load(int first, int pageSize, String sortField,
-				SortOrder sortOrder, Map<String, String> filters) {
-
-			System.out.println("first=" + first + ", pageSize=" + pageSize
-					+ ", sortField=" + sortField + ", sortOrder=" + sortOrder
-					+ ", filters=" + filters);
-
-			try {
-
-				// Prepere request params
-				prepereParams();
-
-				// set size ----------------------------------------------------
-				int size = aloadCount().intValue();
-				dataModel.setRowCount(size);
-
-				if (size < pageSize)
-					page = 1; // Коррекция при убывании
-
-				// page
-				if (page != null) { // Здесь уже подстройка запроса под page
-
-					System.out.println(">>>page 1 do page: " + page);
-					first = pageSize * page.intValue() - pageSize;
-					first = first >= 0 ? first : 0;
-				}
-
-				// call child loading impl -------------------------------------
-				List<T> l = aload(this, first, pageSize, sortField, sortOrder,
-						filters);
-
-				System.out.println(l.size());
-
-				return l;
-			} catch (Exception e) {
-				e.printStackTrace();
-				FacesContext.getCurrentInstance().addMessage(
-						null,
-						new FacesMessage(FacesMessage.SEVERITY_ERROR,
-								"Error: ", e.getMessage()));
+	private void calculateBeanParams() {
+		if (rows == 0) {
+			allPagesCount = 0;
+			oPButtons = null;
+		} else {
+			allPagesCount = (int) (allRowsCount / rows);
+			allPagesCount = allRowsCount > 0 && (allRowsCount % rows) > 0 ? allPagesCount + 1
+					: allPagesCount;
+			
+			
+			int part = maxOPButtons / 2;
+			int ibegin = page - part < 1 ? 1: page - part;
+			int iend= page + part > allPagesCount ? allPagesCount : page + part;
+			
+			
+			
+			oPButtons = new ArrayList<OrderingPaginateButton>();
+			for(int i=ibegin ; i < iend + 1; i++){
+				oPButtons.add(new OrderingPaginateButton(i + "", i + ""));
 			}
-			return null;
 		}
-	};
-
-	public LazyDataModel<T> getDataModel() {
-		return dataModel;
+		
+		
+		
+		
+		
 	}
 
-	public void setDataModel(LazyDataModel<T> dataModel) {
-		this.dataModel = dataModel;
-	}
-
+	
+	
 	/**
-	 * Get rows count
+	 * Initialize all rows in data
 	 * 
 	 * @return
-	 * @throws Exception
 	 */
-	protected abstract Long aloadCount() throws Exception;
+	protected abstract long initAllRowsCount() throws Exception;
+	
+	
+	public static final int maxOPButtons = 10;
+	
+	private List<OrderingPaginateButton> oPButtons;
 
-	/**
-	 * Load the data model
-	 * 
-	 * @param dataModel
-	 * @param first
-	 * @param pageSize
-	 * @param sortField
-	 * @param sortOrder
-	 * @param filters
-	 * @return
-	 * @throws Exception
-	 */
-	protected abstract List<T> aload(LazyDataModel<T> dataModel, int first,
-			int pageSize, String sortField, SortOrder sortOrder,
-			Map<String, String> filters) throws Exception;
+	// ----------------------------------------------------------------------------------------------------------------
+	// Simple table render
 
-	// getters and setters
+	protected List<T> dataModel = new ArrayList<T>();
+
 	// ---------------------------------------------------------------------------------------------
+	// getters and setters
+	
+	
+	
+	
+	
 
 	public Integer getProws() {
 		return prows;
+	}
+
+	public List<OrderingPaginateButton> getoPButtons() {
+		return oPButtons;
+	}
+
+	public int getAllPagesCount() {
+		return allPagesCount;
+	}
+
+	public long getAllRowsCount() {
+		return allRowsCount;
+	}
+
+	public List<T> getDataModel() {
+		return dataModel;
+	}
+
+	public void setDataModel(List<T> dataModel) {
+		this.dataModel = dataModel;
 	}
 
 	public void setProws(Integer prows) {
@@ -232,22 +220,6 @@ public abstract class ABaseCRUDView<T extends Object> {
 
 	public void setCsortField(String csortField) {
 		this.csortField = csortField;
-	}
-
-	public T getSelected() {
-		return selected;
-	}
-
-	public void setSelected(T selected) {
-		this.selected = selected;
-	}
-
-	public T getEdited() {
-		return edited;
-	}
-
-	public void setEdited(T edited) {
-		this.edited = edited;
 	}
 
 }

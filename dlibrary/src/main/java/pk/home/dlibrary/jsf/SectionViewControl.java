@@ -1,10 +1,12 @@
 package pk.home.dlibrary.jsf;
 
 import java.io.Serializable;
+import javax.persistence.metamodel.SingularAttribute;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import pk.home.dlibrary.domain.Section;
+import pk.home.dlibrary.domain.Section_;
 import pk.home.dlibrary.jsf.libs.ABaseCRUDView;
 import pk.home.dlibrary.service.SectionService;
 
@@ -25,16 +27,16 @@ public class SectionViewControl extends ABaseCRUDView<Section> implements
 	@Override
 	protected void aInit() throws Exception {
 		
-		//SingularAttribute<Section, ?> orderByAttribute = Section_.id;
-		//if (sortField != null && sortField.equals("keyName")) {
-		//	orderByAttribute = Section_.keyName;
-		//}
+		SingularAttribute<Section, ?> orderByAttribute = Section_.id;
+		if (csortField != null && csortField.equals("id")) {
+			orderByAttribute = Section_.id;
+		} else if (csortField != null && csortField.equals("keyName")) {
+			orderByAttribute = Section_.keyName;
+		}
 
-		//dataModel = sectionService.getAllEntities(pageSize, first, orderByAttribute,
-		//		SortOrderType.ASC);
 		
-		dataModel = sectionService.getAllEntities(rows, (page - 1) * rows);
-		
+		dataModel = sectionService.getAllEntities((page - 1) * rows, rows,  
+						orderByAttribute, getSortOrderType());
 	}
 
 

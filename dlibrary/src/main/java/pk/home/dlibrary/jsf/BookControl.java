@@ -82,7 +82,7 @@ public class BookControl extends AbstractBasicControl<Book> implements
 			orderByAttribute = Book_.bookNumber;
 		} 
 
-		return bookService.getAllEntities(pageSize, first, orderByAttribute,
+		return bookService.getAllEntities(first,pageSize,  orderByAttribute,
 				sot);
 	}
 

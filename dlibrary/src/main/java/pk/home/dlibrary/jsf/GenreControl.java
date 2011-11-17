@@ -62,7 +62,7 @@ public class GenreControl extends AbstractBasicControl<Genre> implements
 			orderByAttribute = Genre_.keyName;
 		}
 		
-		return genreService.getAllEntities(pageSize,first, orderByAttribute, sot);
+		return genreService.getAllEntities(first, pageSize, orderByAttribute, sot);
 	}
 	
 

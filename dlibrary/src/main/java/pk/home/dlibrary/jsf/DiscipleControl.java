@@ -64,7 +64,7 @@ public class DiscipleControl extends AbstractBasicControl<Disciple> implements
 			orderByAttribute = Disciple_.iname;
 		} 
 		
-		return discipleService.getAllEntities(pageSize,first, orderByAttribute, sot);
+		return discipleService.getAllEntities(first, pageSize, orderByAttribute, sot);
 	}
 	
 

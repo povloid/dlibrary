@@ -1,0 +1,47 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:cc="http://java.sun.com/jsf/composite"
+	xmlns:p="http://primefaces.org/ui">
+<cc:interface>
+	<cc:attribute name="field" required="true"></cc:attribute>
+	<cc:attribute name="caption"></cc:attribute>
+
+	<cc:attribute name="csortOrder" required="true"></cc:attribute>
+	<cc:attribute name="csortField" required="true"></cc:attribute>
+
+
+
+
+
+	<!-- 	<cc:attribute name="rowsperpage" required="true"></cc:attribute> -->
+
+</cc:interface>
+<cc:implementation>
+
+	<h:commandLink ajax="false">
+		
+		<h:graphicImage id="image0" value="/images/icons/splay_16.png"
+			rendered="#{cc.attrs.field != cc.attrs.csortField}" />
+		<h:graphicImage id="image1" value="/images/icons/up_16.png"
+			rendered="#{cc.attrs.field == cc.attrs.csortField and cc.attrs.csortOrder == 'desc'}" />
+		<h:graphicImage id="image2" value="/images/icons/down_16.png"
+			rendered="#{cc.attrs.field == cc.attrs.csortField and cc.attrs.csortOrder == 'asc' }" />
+                       
+		
+		<f:param name="pcsortField" value="#{cc.attrs.field}" />
+		<f:param name="pcsortOrder"
+			value="#{cc.attrs.field == cc.attrs.csortField and cc.attrs.csortOrder == 'asc' ? 'desc' : 'asc' }" />
+		
+		<h:outputText value="#{cc.attrs.field}"
+			rendered="#{cc.attrs.caption == null}" />
+		<h:outputText value="#{cc.attrs.caption}"
+			rendered="#{cc.attrs.caption != null}" />
+
+		<b><h:outputText value="#{cc.attrs.caption}"/></b>
+	</h:commandLink>
+</cc:implementation>
+</html>

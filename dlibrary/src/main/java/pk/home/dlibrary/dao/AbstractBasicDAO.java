@@ -72,13 +72,13 @@ public abstract class AbstractBasicDAO<T extends Object> {
 	@Transactional
 	public List<T> getAllEntities(int firstResult, int maxResults)
 			throws Exception {
-		return getAllEntities(false, maxResults, firstResult, null, SortOrderType.ASC);
+		return getAllEntities(false, firstResult, maxResults, null, SortOrderType.ASC);
 	}
 
 	@Transactional
 	public List<T> getAllEntities(int firstResult, int maxResults,
 			SingularAttribute<T, ?> orderByAttribute, SortOrderType sortOrder) throws Exception {
-		return getAllEntities(false, maxResults, firstResult, orderByAttribute, sortOrder);
+		return getAllEntities(false, firstResult, maxResults, orderByAttribute, sortOrder);
 	}
 
 	@Transactional

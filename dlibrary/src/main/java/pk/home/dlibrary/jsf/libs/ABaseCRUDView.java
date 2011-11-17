@@ -5,6 +5,8 @@ import java.util.List;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 
+import pk.home.dlibrary.dao.AbstractBasicDAO.SortOrderType;
+
 /**
  * Only View class
  * 
@@ -55,13 +57,12 @@ public abstract class ABaseCRUDView<T extends Object> {
 	// session bean params
 	protected Integer rows = 10;
 	protected Integer page = 1;
-	protected String csortOrder;
+	protected String csortOrder = "desc"; 
 	protected String csortField;
 
 	// calculate bean params
 	protected int allPagesCount;
 	protected long allRowsCount;
-	
 
 	/**
 	 * prepere params
@@ -74,10 +75,10 @@ public abstract class ABaseCRUDView<T extends Object> {
 		ppage = null;
 
 		csortOrder = pcsortOrder != null ? pcsortOrder : csortOrder;
-		csortOrder = null;
+		pcsortOrder = null;
 
 		csortField = pcsortField != null ? pcsortField : csortField;
-		csortField = null;
+		pcsortField = null;
 	}
 
 	/**
@@ -88,41 +89,56 @@ public abstract class ABaseCRUDView<T extends Object> {
 			allPagesCount = 0;
 			oPButtons = null;
 		} else {
+
+			// Sort order
+			// none
+
+			// Коррекция должна быть после всех сортировок и фильтраций
 			allPagesCount = (int) (allRowsCount / rows);
 			allPagesCount = allRowsCount > 0 && (allRowsCount % rows) > 0 ? allPagesCount + 1
 					: allPagesCount;
-			
-			
+
+			// Защита при уменьшении количества страниц, например при увеличении
+			// строк на страницу
+			page = page > allPagesCount ? allPagesCount : page;
+
+			// далее вормирование набора кнопок для пэйджера
 			int part = maxOPButtons / 2;
-			int ibegin = page - part < 1 ? 1: page - part;
-			int iend= page + part > allPagesCount ? allPagesCount : page + part;
-			
-			
-			
+			int ibegin = page - part < 1 ? 1 : page - part;
+			int iend = page + part > allPagesCount ? allPagesCount : page
+					+ part;
+
 			oPButtons = new ArrayList<OrderingPaginateButton>();
-			for(int i=ibegin ; i < iend + 1; i++){
+			for (int i = ibegin; i < iend + 1; i++) {
 				oPButtons.add(new OrderingPaginateButton(i + "", i + ""));
 			}
 		}
-		
-		
-		
-		
-		
 	}
 
-	
-	
+	/**
+	 * Get sotr order type
+	 * 
+	 * @return
+	 */
+	protected SortOrderType getSortOrderType() {
+		SortOrderType sot = SortOrderType.ASC;
+
+		if (csortOrder != null) {
+			sot = csortOrder.equals("asc") ? SortOrderType.ASC : sot;
+			sot = csortOrder.equals("desc") ? SortOrderType.DESC : sot;
+		}
+		return sot;
+	}
+
 	/**
 	 * Initialize all rows in data
 	 * 
 	 * @return
 	 */
 	protected abstract long initAllRowsCount() throws Exception;
-	
-	
+
 	public static final int maxOPButtons = 10;
-	
+
 	private List<OrderingPaginateButton> oPButtons;
 
 	// ----------------------------------------------------------------------------------------------------------------
@@ -132,11 +148,6 @@ public abstract class ABaseCRUDView<T extends Object> {
 
 	// ---------------------------------------------------------------------------------------------
 	// getters and setters
-	
-	
-	
-	
-	
 
 	public Integer getProws() {
 		return prows;

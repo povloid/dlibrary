@@ -42,11 +42,11 @@
 
 		<h:panelGroup>
 
-			<p:commandButton value="first" ajax="false"
+			<p:commandButton title="first" ajax="false" image="ui-icon rewnd16"
 				disabled="#{cc.attrs.page == 1}">
 				<f:param name="ppage" value="#{1}" />
 			</p:commandButton>
-			<p:commandButton value="prev page" ajax="false"
+			<p:commandButton title="prev page" ajax="false" image="ui-icon skipb16"
 				disabled="#{cc.attrs.page == 1}">
 				<f:param name="ppage" value="#{cc.attrs.page - 1}" />
 			</p:commandButton>
@@ -54,7 +54,7 @@
 
 			<ui:repeat var="button" value="#{cc.attrs.buttons}">
 
-				<p:commandButton value="#{button.caption}" ajax="false"
+				<p:commandButton title="Goto page #{button.caption}" value="#{button.caption}" ajax="false"
 					disabled="#{cc.attrs.page == button.ppage}">
 					<f:param name="ppage" value="#{button.ppage}" />
 				</p:commandButton>
@@ -70,11 +70,11 @@
 			
 			/ Pages:<h:outputText value="#{cc.attrs.pages}" />
 
-			<p:commandButton value="next page" ajax="false"
+			<p:commandButton title="next page" ajax="false" image="ui-icon skipf16"
 				disabled="#{cc.attrs.page == cc.attrs.pages}">
 				<f:param name="ppage" value="#{cc.attrs.page + 1}" />
 			</p:commandButton>
-			<p:commandButton value="last" ajax="false"
+			<p:commandButton title="last" ajax="false" image="ui-icon fastf16"
 				disabled="#{cc.attrs.page == cc.attrs.pages}">
 				<f:param name="ppage" value="#{cc.attrs.pages}" />
 			</p:commandButton>    

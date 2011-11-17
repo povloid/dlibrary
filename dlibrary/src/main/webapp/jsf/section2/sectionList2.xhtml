@@ -1,0 +1,102 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pk="http://java.sun.com/jsf/composite/pkomponents">
+
+<ui:composition template="/WEB-INF/templites/templite.xhtml">
+	<ui:define name="title">
+        Справочник секций 2
+    </ui:define>
+
+	<ui:define name="header_icon">
+		<img src="#{request.contextPath}/images/icons/addbk_24.png"></img>
+	</ui:define>
+
+	<ui:define name="header">
+        Справочник секций 2
+    </ui:define>
+
+	<ui:define name="content">
+
+		<f:metadata>
+			<f:event type="preRenderView" listener="#{sectionViewControl.init}" />
+			<f:viewParam name="ppage" value="#{sectionViewControl.page}" />
+			<f:viewParam name="prows" value="#{sectionViewControl.prows}" />
+			<f:viewParam name="pcsortField"
+				value="#{sectionViewControl.pcsortField}" />
+			<f:viewParam name="pcsortOrder"
+				value="#{sectionViewControl.pcsortOrder}" />
+		</f:metadata>
+
+		<h:form id="form">
+
+			<p:growl id="msgs" showDetail="true" />
+
+
+
+
+			<p:dataTable id="table1" var="row"
+				value="#{sectionViewControl.dataModel}" widgetVar="dataTable1"
+				emptyMessage="Таблица пустая">
+
+
+				<f:facet name="header">
+					<pk:pkpaginator pages="#{sectionViewControl.allPagesCount}"
+						count="#{sectionViewControl.allRowsCount}"
+						page="#{sectionViewControl.page}"
+						buttons="#{sectionViewControl.oPButtons}"
+						rows="#{sectionViewControl.rows}" />
+
+				</f:facet>
+
+
+				<p:column>
+					<f:facet name="header">
+						<pk:pktsortorder field="id"
+							csortOrder="#{sectionViewControl.csortOrder}"
+							csortField="#{sectionViewControl.csortField}" />
+					</f:facet>
+					<h:outputText value="#{row.id}" />
+				</p:column>
+
+				<p:column>
+					<f:facet name="header">
+						<pk:pktsortorder field="keyName"
+							csortOrder="#{sectionViewControl.csortOrder}"
+							csortField="#{sectionViewControl.csortField}" />
+					</f:facet>
+					<h:outputText value="#{row.keyName}" />
+				</p:column>
+
+				<p:column headerText="Описание">
+					<h:outputText value="#{row.description}" />
+				</p:column>
+
+
+				<f:facet name="footer">
+					<pk:pkpaginator pages="#{sectionViewControl.allPagesCount}"
+						count="#{sectionViewControl.allRowsCount}"
+						page="#{sectionViewControl.page}"
+						buttons="#{sectionViewControl.oPButtons}"
+						rows="#{sectionViewControl.rows}" />
+
+				</f:facet>
+
+
+			</p:dataTable>
+
+
+
+		</h:form>
+	</ui:define>
+
+	<ui:define name="footer">
+        footer
+    </ui:define>
+</ui:composition>
+</html>

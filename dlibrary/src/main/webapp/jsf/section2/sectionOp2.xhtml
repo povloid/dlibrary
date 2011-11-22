@@ -1,0 +1,96 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pk="http://java.sun.com/jsf/composite/pkomponents">
+
+<ui:composition template="/WEB-INF/templites/templite.xhtml">
+	<ui:define name="title">
+        секции
+    </ui:define>
+
+	<ui:define name="header_icon">
+		<pk:pk_dialog_caption_icon add_view="#{sectionDialogControl.add}"
+			edit_view="#{sectionDialogControl.edit}"
+			del_view="#{sectionDialogControl.del}" />
+	</ui:define>
+
+	<ui:define name="header">
+        <pk:pk_dialog_caption_text add_view="#{sectionDialogControl.add}"
+			edit_view="#{sectionDialogControl.edit}"
+			del_view="#{sectionDialogControl.del}" caption="секции"/>
+    </ui:define>
+
+	<ui:define name="content">
+		<f:metadata>
+			<f:event type="preRenderView" listener="#{sectionDialogControl.init}" />
+
+			<f:viewParam name="retUrl" value="#{sectionDialogControl.retUrl}" />
+			<f:viewParam name="sKey" value="#{sectionDialogControl.sKey}" />
+			<f:viewParam name="mode" value="#{sectionDialogControl.mode}" />
+			<f:viewParam name="redirect_plus"
+				value="#{sectionDialogControl.redirect_plus}" />
+		</f:metadata>
+
+
+
+
+		<h:form>
+
+			<!-- 			<h:outputText value="#{sectionDialogControl.sKey}"></h:outputText>; -->
+			<!-- 		<h:outputText value="#{sectionDialogControl.mode}"></h:outputText>; -->
+			<!-- 		<h:outputText value="#{sectionDialogControl.retUrl}"></h:outputText>; -->
+			<!-- 		<h:outputText value="#{sectionDialogControl.redirect_plus}"></h:outputText> -->
+
+
+
+			<p:growl id="msgs" showDetail="true" />
+
+
+
+			<pk:pk_cancel_button cancel_action="#{sectionDialogControl.cancel()}"></pk:pk_cancel_button>
+
+
+			<p:panel header="Детали:" style="margin-top:10px">
+				<p:messages showDetail="true" autoUpdate="true" />
+
+				<h:panelGrid id="detail" columns="2" styleClass="grid">
+
+					<h:outputText value="№:"
+						rendered="#{sectionDialogControl.edit || sectionDialogControl.del}" />
+
+					<h:outputText value="#{sectionDialogControl.edited.id}"
+						rendered="#{sectionDialogControl.edit || sectionDialogControl.del}" />
+
+					<h:outputLabel value="KeyName:" />
+					<p:inputText value="#{sectionDialogControl.edited.keyName}"
+						readonly="#{sectionDialogControl.del}" title="KeyName"
+						required="true" requiredMessage="The KeyName field is required." />
+
+					<h:outputLabel value="Description:" />
+					<p:inputTextarea value="#{sectionDialogControl.edited.description}"
+						style="width:300px;height:100px;"
+						readonly="#{sectionDialogControl.del}" title="Description" />
+
+					<pk:pkdialog_crud_buttons
+						add_action="#{sectionDialogControl.confirmAdd()}"
+						edit_action="#{sectionDialogControl.confirmEdit()}"
+						del_action="#{sectionDialogControl.confirmDel()}"
+						add_view="#{sectionDialogControl.add}"
+						edit_view="#{sectionDialogControl.edit}"
+						del_view="#{sectionDialogControl.del}" />
+
+				</h:panelGrid>
+			</p:panel>
+		</h:form>
+
+	</ui:define>
+	<ui:define name="footer">
+
+	</ui:define>
+</ui:composition>
+</html>

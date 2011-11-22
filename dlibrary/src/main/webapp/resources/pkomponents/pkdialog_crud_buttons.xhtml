@@ -1,0 +1,40 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:cc="http://java.sun.com/jsf/composite"
+	xmlns:p="http://primefaces.org/ui">
+<cc:interface>
+
+	<cc:attribute name="add_action" method-signature="java.lang.String f()" />
+	<cc:attribute name="edit_action"
+		method-signature="java.lang.String f()" />
+	<cc:attribute name="del_action" method-signature="java.lang.String f()" />
+
+	<cc:attribute name="add_view" type="java.lang.Boolean" />
+	<cc:attribute name="edit_view" type="java.lang.Boolean" />
+	<cc:attribute name="del_view" type="java.lang.Boolean" />
+
+
+</cc:interface>
+<cc:implementation>
+	<h:panelGroup>
+		<p:commandButton image="ui-icon add" ajax="true" value="Add"
+			rendered="#{cc.attrs.add_view}" action="#{cc.attrs.add_action}"
+			title="Cancel">
+		</p:commandButton>
+
+		<p:commandButton image="ui-icon edit" ajax="true" value="Edit"
+			rendered="#{cc.attrs.edit_view}" action="#{cc.attrs.edit_action}"
+			title="Cancel">
+		</p:commandButton>
+
+		<p:commandButton image="ui-icon del" ajax="true" value="Delete"
+			rendered="#{cc.attrs.del_view}" action="#{cc.attrs.del_action}"
+			title="Cancel">
+		</p:commandButton>
+	</h:panelGroup>
+</cc:implementation>
+</html>

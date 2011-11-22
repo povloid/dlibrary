@@ -7,12 +7,12 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import pk.home.dlibrary.domain.Section;
 import pk.home.dlibrary.domain.Section_;
-import pk.home.dlibrary.jsf.libs.ABaseCRUDView;
+import pk.home.dlibrary.jsf.libs.ABaseLazyLoadTableView;
 import pk.home.dlibrary.service.SectionService;
 
 @Scope("session")
 @Component("sectionViewControl")
-public class SectionViewControl extends ABaseCRUDView<Section> implements
+public class SectionViewControl extends ABaseLazyLoadTableView<Section> implements
 		Serializable {
 
 	/**

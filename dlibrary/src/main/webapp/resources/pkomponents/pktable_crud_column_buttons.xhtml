@@ -1,0 +1,37 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:cc="http://java.sun.com/jsf/composite"
+	xmlns:p="http://primefaces.org/ui">
+<cc:interface>
+
+	<cc:attribute name="edit_url" />
+	<cc:attribute name="del_url" />
+
+	<cc:attribute name="show_view_button"></cc:attribute>
+	<cc:attribute name="view_button_oncomplete" default=""></cc:attribute>
+
+</cc:interface>
+<cc:implementation>
+
+	<p:commandButton update=":form:display"
+		rendered="#{!empty cc.attrs.show_view_button and cc.attrs.show_view_button == 'true'}"
+		oncomplete="#{cc.attrs.view_button_oncomplete}"
+		image="ui-icon ui-icon-search" title="View row">
+	</p:commandButton>
+
+
+	<p:commandButton image="ui-icon edit"
+		onclick="window.location.href = '#{cc.attrs.edit_url}';"
+		title="Edit row">
+	</p:commandButton>
+	<p:commandButton image="ui-icon del"
+		onclick="window.location.href = '#{cc.attrs.del_url}';"
+		title="Del row">
+	</p:commandButton>
+
+</cc:implementation>
+</html>

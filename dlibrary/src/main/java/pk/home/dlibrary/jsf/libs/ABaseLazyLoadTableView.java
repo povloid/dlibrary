@@ -13,7 +13,7 @@ import pk.home.dlibrary.dao.AbstractBasicDAO.SortOrderType;
  * @author povloid
  * 
  */
-public abstract class ABaseCRUDView<T extends Object> {
+public abstract class ABaseLazyLoadTableView<T extends Object> {
 
 	// ----------------------------------------------------------------------------------------------------------------
 	// INIT
@@ -44,7 +44,7 @@ public abstract class ABaseCRUDView<T extends Object> {
 	protected abstract void aInit() throws Exception;
 
 	// -- bean params
-	// -------------------------------------------------------------------------------------------------
+	// ----------------------------------------------------------------------------------------------------------------
 
 	// ----------------------------------------------------------------------------------------------------------------
 

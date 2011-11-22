@@ -1,0 +1,27 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:cc="http://java.sun.com/jsf/composite"
+	xmlns:p="http://primefaces.org/ui">
+<cc:interface>
+
+	<cc:attribute name="caption" type="java.lang.String" />
+
+	<cc:attribute name="add_view" type="java.lang.Boolean" />
+	<cc:attribute name="edit_view" type="java.lang.Boolean" />
+	<cc:attribute name="del_view" type="java.lang.Boolean" />
+
+
+</cc:interface>
+<cc:implementation>
+		<h:outputText rendered="#{cc.attrs.add_view}"
+			value="Добавление #{cc.attrs.caption}"></h:outputText>
+		<h:outputText rendered="#{cc.attrs.edit_view}"
+			value="Редактирование #{cc.attrs.caption}"></h:outputText>
+		<h:outputText rendered="#{cc.attrs.del_view}"
+			value="Удаление #{cc.attrs.caption}"></h:outputText>
+</cc:implementation>
+</html>

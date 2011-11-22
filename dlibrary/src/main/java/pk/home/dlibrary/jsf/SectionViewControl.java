@@ -10,6 +10,14 @@ import pk.home.dlibrary.domain.Section_;
 import pk.home.dlibrary.jsf.libs.ABaseLazyLoadTableView;
 import pk.home.dlibrary.service.SectionService;
 
+
+
+/**
+ * The section view control class
+ * 
+ * @author povloid
+ *
+ */
 @Scope("session")
 @Component("sectionViewControl")
 public class SectionViewControl extends ABaseLazyLoadTableView<Section> implements

@@ -17,21 +17,22 @@
 </cc:interface>
 <cc:implementation>
 
-	<p:commandButton update=":form:display"
-		rendered="#{!empty cc.attrs.show_view_button and cc.attrs.show_view_button == 'true'}"
-		oncomplete="#{cc.attrs.view_button_oncomplete}"
-		image="ui-icon ui-icon-search" title="View row">
-	</p:commandButton>
+	<h:panelGrid columns="3" styleClass="actions" cellpadding="1">
+		<p:commandButton update=":form:display"
+			rendered="#{!empty cc.attrs.show_view_button and cc.attrs.show_view_button == 'true'}"
+			oncomplete="#{cc.attrs.view_button_oncomplete}"
+			image="ui-icon ui-icon-search" title="View row">
+		</p:commandButton>
 
-
-	<p:commandButton image="ui-icon edit"
-		onclick="window.location.href = '#{cc.attrs.edit_url}';"
-		title="Edit row">
-	</p:commandButton>
-	<p:commandButton image="ui-icon del"
-		onclick="window.location.href = '#{cc.attrs.del_url}';"
-		title="Del row">
-	</p:commandButton>
+		<p:commandButton image="ui-icon edit"
+			onclick="window.location.href = '#{cc.attrs.edit_url}';"
+			title="Edit row">
+		</p:commandButton>
+		<p:commandButton image="ui-icon del"
+			onclick="window.location.href = '#{cc.attrs.del_url}';"
+			title="Del row">
+		</p:commandButton>
+	</h:panelGrid>
 
 </cc:implementation>
 </html>

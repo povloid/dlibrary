@@ -24,11 +24,11 @@
 
 	<h:commandLink ajax="false">
 		
-		<h:graphicImage id="image0" value="/images/icons/splay_16.png"
+		<h:graphicImage id="image0" value="/images/icons/splay_16.png" style="border : 0px"
 			rendered="#{cc.attrs.field != cc.attrs.csortField}" />
-		<h:graphicImage id="image1" value="/images/icons/up_16.png"
+		<h:graphicImage id="image1" value="/images/icons/up_16.png" style="border : 0px"
 			rendered="#{cc.attrs.field == cc.attrs.csortField and cc.attrs.csortOrder == 'desc'}" />
-		<h:graphicImage id="image2" value="/images/icons/down_16.png"
+		<h:graphicImage id="image2" value="/images/icons/down_16.png" style="border : 0px"
 			rendered="#{cc.attrs.field == cc.attrs.csortField and cc.attrs.csortOrder == 'asc' }" />
                        
 		

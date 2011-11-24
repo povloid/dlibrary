@@ -24,84 +24,73 @@
 </cc:interface>
 <cc:implementation>
 
+
+
 	<script type="text/javascript">
 		function setprows(sprows) {
+
 			var el = document.createElement("input");
 			el.type = "hidden";
 			el.name = "prows";
-			el.value = sprows;
+			el.value = sprows.value;
 			this.form.appendChild(el);
 			this.form.submit();
 
 		}
 	</script>
 
+
 	<h:panelGrid columns="2" style="text-align: left;">
 
-		
 
-		<h:form>
+		<p:selectOneMenu id="sprows" value="#{cc.attrs.rows}"
+			onchange="setprows(this);" style="margin-top: 5px">
+			<f:selectItem itemLabel="#{cc.attrs.rows}"
+				itemValue="#{cc.attrs.rows}" />
+			<f:selectItem itemLabel="5" itemValue="5" />
+			<f:selectItem itemLabel="10" itemValue="10" />
+			<f:selectItem itemLabel="15" itemValue="15" />
+			<f:selectItem itemLabel="20" itemValue="20" />
+			<f:selectItem itemLabel="30" itemValue="30" />
+			<f:selectItem itemLabel="50" itemValue="50" />
+			<f:selectItem itemLabel="100" itemValue="100" />
+			<f:selectItem itemLabel="1000" itemValue="1000" />
+		</p:selectOneMenu>
 
-			<p:selectOneMenu id="sprows" value="#{cc.attrs.rows}"
-				onchange="setprows(this.options[this.selectedIndex].value);"
-				style="margin-top: 5px">
-				<f:selectItem itemLabel="#{cc.attrs.rows}"
-					itemValue="#{cc.attrs.rows}" />
-				<f:selectItem itemLabel="5" itemValue="5" />
-				<f:selectItem itemLabel="10" itemValue="10" />
-				<f:selectItem itemLabel="15" itemValue="15" />
-				<f:selectItem itemLabel="20" itemValue="20" />
-				<f:selectItem itemLabel="30" itemValue="30" />
-				<f:selectItem itemLabel="50" itemValue="50" />
-				<f:selectItem itemLabel="100" itemValue="100" />
-				<f:selectItem itemLabel="1000" itemValue="1000" />
-			</p:selectOneMenu>
-		</h:form>
+		<h:panelGroup>
 
-		<h:form>
-			<h:panelGroup>
+			<p:commandButton title="first" ajax="false" image="ui-icon rewnd16"
+				disabled="#{cc.attrs.page == 1}">
+				<f:param name="ppage" value="#{1}" />
+			</p:commandButton>
+			<p:commandButton title="prev page" ajax="false"
+				image="ui-icon skipb16" disabled="#{cc.attrs.page == 1}">
+				<f:param name="ppage" value="#{cc.attrs.page - 1}" />
+			</p:commandButton>
 
-				<p:commandButton title="first" ajax="false" image="ui-icon rewnd16"
-					disabled="#{cc.attrs.page == 1}">
-					<f:param name="ppage" value="#{1}" />
+
+			<ui:repeat var="button" value="#{cc.attrs.buttons}">
+
+				<p:commandButton title="Goto page #{button.caption}"
+					value="#{button.caption}" ajax="false"
+					disabled="#{cc.attrs.page == button.ppage}">
+					<f:param name="ppage" value="#{button.ppage}" />
 				</p:commandButton>
-				<p:commandButton title="prev page" ajax="false"
-					image="ui-icon skipb16" disabled="#{cc.attrs.page == 1}">
-					<f:param name="ppage" value="#{cc.attrs.page - 1}" />
-				</p:commandButton>
+			</ui:repeat>
 
+			<p:commandButton title="next page" ajax="false"
+				image="ui-icon skipf16"
+				disabled="#{cc.attrs.page == cc.attrs.pages}">
+				<f:param name="ppage" value="#{cc.attrs.page + 1}" />
+			</p:commandButton>
+			<p:commandButton title="last" ajax="false" image="ui-icon fastf16"
+				disabled="#{cc.attrs.page == cc.attrs.pages}">
+				<f:param name="ppage" value="#{cc.attrs.pages}" />
+			</p:commandButton>   
+					Page <h:outputText value="#{cc.attrs.page}" /> of Pages <h:outputText value="#{cc.attrs.pages}" />
+				    /Rows: <h:outputText value="#{cc.attrs.count}" />
+		</h:panelGroup>
 
-				<ui:repeat var="button" value="#{cc.attrs.buttons}">
-
-					<p:commandButton title="Goto page #{button.caption}"
-						value="#{button.caption}" ajax="false"
-						disabled="#{cc.attrs.page == button.ppage}">
-						<f:param name="ppage" value="#{button.ppage}" />
-					</p:commandButton>
-				</ui:repeat>
-	
-
-	
- 
-		
-			Page: <h:outputText value="#{cc.attrs.page}" />
-				<!-- 	<p:inputText widgetVar="setppage" id="ppage" value="#{cc.attrs.page}"  -->
-				<!-- 		label="Surname" />   -->
-			
-			/ Pages:<h:outputText value="#{cc.attrs.pages}" />
-
-				<p:commandButton title="next page" ajax="false"
-					image="ui-icon skipf16"
-					disabled="#{cc.attrs.page == cc.attrs.pages}">
-					<f:param name="ppage" value="#{cc.attrs.page + 1}" />
-				</p:commandButton>
-				<p:commandButton title="last" ajax="false" image="ui-icon fastf16"
-					disabled="#{cc.attrs.page == cc.attrs.pages}">
-					<f:param name="ppage" value="#{cc.attrs.pages}" />
-				</p:commandButton>    
-		Rows:<h:outputText value="#{cc.attrs.count}" />
-			</h:panelGroup>
-		</h:form>
 	</h:panelGrid>
 
 

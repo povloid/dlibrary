@@ -41,6 +41,8 @@
 			<pk:pk_add_button
 				add_url="#{request.contextPath}/faces/jsf/section2/sectionOp2.xhtml?mode=add&amp;redirect_plus=yes&amp;retUrl=#{request.contextPath}/faces/jsf/section2/sectionList2.xhtml"></pk:pk_add_button>
 
+
+
 			<p:dataTable id="table1" var="row"
 				value="#{sectionViewControl.dataModel}" widgetVar="dataTable1"
 				emptyMessage="Таблица пустая">
@@ -74,7 +76,7 @@
 					<h:outputText value="#{row.keyName}" />
 				</p:column>
 
-				<p:column headerText="Описание">
+				<p:column headerText="Описание" >
 					<h:outputText value="#{row.description}" />
 				</p:column>
 
@@ -96,6 +98,8 @@
 
 
 			</p:dataTable>
+
+
 
 
 
